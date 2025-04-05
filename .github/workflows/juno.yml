@@ -33,3 +33,4 @@ jobs:
         with:
           name: debian-image
           path: mkosi.output/image.tar.zst
+          retention-days: 1
