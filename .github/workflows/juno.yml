@@ -39,7 +39,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'workflow_dispatch'
         with:
-          tag_name: ${{ steps.set_tag.outputs.tag }}
+          tag_name: ${{ steps.tag.outputs.tag }}
           files: mkosi.output/image.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
