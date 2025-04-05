@@ -24,12 +24,9 @@ jobs:
       - name: Show image summary
         run: mkosi summary
 
-      - name: Build tools tree
-        run: sudo mkosi -f sandbox -- true
-
       - name: Build the image
         run: |
-          mkosi sandbox -- mkosi --distribution arch --force
+          sudo mkosi --distribution arch --force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
