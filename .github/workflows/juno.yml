@@ -28,9 +28,18 @@ jobs:
         run: |
           sudo mkosi --force
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'workflow_dispatch'
         with:
-          name: debian-image
-          path: mkosi.output/image.tar.zst
-          retention-days: 1
+          tag_name: "nightly-debian-$(date +%Y%m%d)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+      - name: Upload image to release
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          files: mkosi.output/image.tar.zst
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
