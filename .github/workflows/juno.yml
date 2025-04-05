@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update --assume-yes
-          sudo apt-get install --assume-yes --no-install-recommends archlinux-keyring pacman pacman-package-manager makepkg mkosi systemd-ukify
+          sudo apt-get install --assume-yes --no-install-recommends debootstrap debian-keyring mkosi systemd-ukify
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,15 +24,9 @@ jobs:
       - name: Show image summary
         run: mkosi summary
 
-      - name: Initialize pacman keyring
-        run: |
-          sudo pacman-key --init
-          sudo pacman-key --populate archlinux
-          sudo pacman-key --refresh-keys
-
       - name: Build the image
         run: |
-          sudo mkosi --distribution arch --force
+          sudo mkosi --force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
