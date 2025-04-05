@@ -1,4 +1,4 @@
-name: Build ArchLinux Image for "juno"
+name: Build Debian Image for "juno"
 
 on:
   push:
@@ -31,5 +31,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: archlinux-image
-          path: mkosi.output/
+          name: debian-image
+          path: mkosi.output/image.tar.zst
