@@ -9,14 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: archlinux:latest
-
     steps:
       - name: Install dependencies
         run: |
-          pacman -Syu --noconfirm
-          pacman -S --noconfirm mkosi git systemd sudo
+          apt update -y
+          apt install -y pacman mkosi
 
       - name: Checkout repository
         uses: actions/checkout@v4
