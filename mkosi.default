@@ -1,0 +1,13 @@
+[Distribution]
+Distribution=arch
+
+[Output]
+Format=directory
+
+[Packages]
+# Basic packages for Arch
+Packages=base linux systemd
+
+[Validation]
+RunBefore=echo "Image build starting..."
+RunAfter=echo "Image build complete!"
