@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update --assume-yes
-          sudo apt-get install --assume-yes --no-install-recommends debootstrap debian-keyring mkosi systemd-ukify
+          sudo apt-get install --assume-yes --no-install-recommends debootstrap debian-archive-keyring debian-keyring mkosi systemd-ukify
 
       - name: Checkout repository
         uses: actions/checkout@v4
