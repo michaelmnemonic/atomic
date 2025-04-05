@@ -30,7 +30,7 @@ jobs:
         
       - name: Set release tag
         id: tag
-        run: export tag=nightly-debian-$(date +%Y%m%d)
+        run: echo "tag=nightly-debian-$(date +%Y%m%d)" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
