@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update -y
-          sudo apt install -y pacman mkosi
+          sudo apt-get install --assume-yes --no-install-recommends pacman mkosi
 
       - name: Checkout repository
         uses: actions/checkout@v4
