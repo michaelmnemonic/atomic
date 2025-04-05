@@ -27,12 +27,16 @@ jobs:
       - name: Build the image
         run: |
           sudo mkosi --force
+        
+      - name: Set release tag
+        id: tag
+        run: echo "tag=nightly-debian-$(date +%Y%m%d)" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'workflow_dispatch'
         with:
-          tag_name: "nightly-debian-$(date +%Y%m%d)"
+          tag_name: ${{ steps.tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
