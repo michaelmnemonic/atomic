@@ -26,7 +26,7 @@ jobs:
 
       - name: Build the image
         run: |
-          sudo mkosi --force
+          mkosi --force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
