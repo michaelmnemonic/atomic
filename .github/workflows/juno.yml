@@ -24,6 +24,12 @@ jobs:
       - name: Show image summary
         run: mkosi summary
 
+      - name: Initialize pacman keyring
+        run: |
+          sudo pacman-key --init
+          sudo pacman-key --populate archlinux
+          sudo pacman-key --refresh-keys
+
       - name: Build the image
         run: |
           sudo mkosi --distribution arch --force
