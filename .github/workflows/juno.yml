@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update -y
-          sudo apt-get install --assume-yes --no-install-recommends pacman mkosi systemd-ukify
+          sudo apt-get install --assume-yes --no-install-recommends archlinux-keyring pacman pacman-package-manager mkosi systemd-ukify
 
       - name: Checkout repository
         uses: actions/checkout@v4
