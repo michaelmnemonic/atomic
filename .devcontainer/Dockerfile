@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/devcontainers/base:debian
 
 RUN apt update --assume-yes && \
     apt-get install --assume-yes --no-install-recommends \
+        cpio \
         debian-archive-keyring \
         debian-keyring \
         debootstrap \
