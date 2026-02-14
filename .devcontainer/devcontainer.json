@@ -1,6 +1,7 @@
 {
   "name": "atomic",
-  "image": "mcr.microsoft.com/devcontainers/base:debian",
-  "features": {
-  }
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {}
 }
