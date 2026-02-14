@@ -5,6 +5,8 @@ RUN apt update --assume-yes && \
         debian-archive-keyring \
         debian-keyring \
         debootstrap \
+        e2fsprogs \
+        systemd-repart \
         systemd-ukify \
         zstd
 
