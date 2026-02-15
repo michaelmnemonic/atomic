@@ -43,3 +43,28 @@ The build succeeded immediately. `systemd-repart` was able to create the sparse 
 
 **Trade-off:**  
 Build artifacts are now stored in RAM (`/tmp`). This limits the size of the image we can build (dependent on available RAM) and is volatile (lost on reboot). For a production setup, a dedicated `ext4` or `btrfs` partition/loopback file would be preferred.
+
+# Troubleshooting Log: Verity and Key Generation
+
+## Issue Description
+**Context:**  
+Enabling `dm-verity` via `Verity=yes` in `mkosi.conf`.
+
+**Prerequisite:**  
+`mkosi` requires cryptographic keys to sign the Verity root hash (or the UKI containing it) to establish a chain of trust. Without these keys, the build process will fail or produce an unverifiable image.
+
+## Solution
+Before enabling Verity, generate a local key pair (private key and certificate).
+
+**Command:**
+```bash
+mkosi genkey
+```
+
+**Artifacts:**
+This creates two files in the project root:
+- `mkosi.key`: Private key (keep secret!)
+- `mkosi.crt`: Public certificate (embedded in the image/UKI).
+
+**Usage:**
+`mkosi` automatically detects these files and uses them to sign artifacts when `Verity=yes` or `SecureBoot=yes` is configured.
