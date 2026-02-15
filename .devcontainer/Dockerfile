@@ -6,7 +6,10 @@ RUN apt update --assume-yes && \
         debian-archive-keyring \
         debian-keyring \
         debootstrap \
+        dosfstools \
         e2fsprogs \
+        erofs-utils \
+        mtools \
         systemd-repart \
         systemd-ukify \
         zstd
