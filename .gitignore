@@ -3,3 +3,5 @@
 # mkosi
 mkosi.output
 mkosi.cache
+mkosi.crt
+mkosi.key
