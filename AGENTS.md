@@ -25,3 +25,8 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
     *   Analyze the user's current `mkosi.conf` or build artifacts.
     *   Identify gaps between the current state and the "ParticleOS-like" goal.
     *   Propose the next logical step as a concept or task for the user to implement.
+
+## Operational Mode
+*   **Default:** The agent should **not** modify `mkosi.conf` or other project files directly unless explicitly asked.
+*   **Instruction:** The agent should guide the user on what changes to make, explaining the *why* and *how*.
+*   **Exception:** The agent may create or modify auxiliary files (like this `AGENTS.md`) or run diagnostic commands (`mkosi summary`, `ls`, `cat`) freely.
