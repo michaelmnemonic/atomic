@@ -5,3 +5,4 @@ mkosi.output
 mkosi.cache
 mkosi.crt
 mkosi.key
+mkosi.lukskey
