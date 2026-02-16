@@ -68,3 +68,31 @@ This creates two files in the project root:
 
 **Usage:**
 `mkosi` automatically detects these files and uses them to sign artifacts when `Verity=yes` or `SecureBoot=yes` is configured.
+
+# Troubleshooting Log: Missing /etc/security/ (PAM Errors)
+
+## Issue Description
+**Symptoms:**  
+Booting the image with `mkosi vm` results in numerous PAM errors, specifically noting that `/etc/security/time.conf` does not exist.
+Upon inspection, `/etc/security` exists as a symlink (e.g., to `/usr/factory/etc/security` or similar) but the destination directory is empty.
+
+**Context:**
+This occurs in "hermetic /usr" or "immutable" setups where `/etc` is expected to be populated from a factory default location in `/usr` (via `systemd-tmpfiles`, overlayfs, or symlinks).
+
+## Analysis
+The build process failed to move the configuration files from the build root's `/etc` to the factory location in `/usr` before the image was finalized. In a hermetic `/usr` design, the `/usr` partition is read-only and contains all default configuration. `/etc` is populated at runtime or contains symlinks to `/usr`.
+
+If the script responsible for this move (typically `mkosi.finalize`) is missing or not executable, the files remain in `/etc` of the build root (which might be discarded or overshadowed) or are simply not in the expected factory location.
+
+## Solution
+Ensure that `mkosi.finalize` (or the configured finalize script) exists in the project root and is executable.
+This script must contain the logic to move files from `$BUILDROOT/etc` to `$BUILDROOT/usr/share/factory/etc` (or your specific factory path) so they are included in the immutable `/usr` partition.
+
+**Example `mkosi.finalize` snippet:**
+```bash
+#!/bin/sh
+# Move /etc to /usr/share/factory/etc
+mkdir -p "$BUILDROOT/usr/share/factory"
+mv "$BUILDROOT/etc" "$BUILDROOT/usr/share/factory/"
+mkdir "$BUILDROOT/etc"
+```
