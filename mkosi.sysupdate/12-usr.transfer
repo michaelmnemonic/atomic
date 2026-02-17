@@ -7,12 +7,12 @@ ProtectVersion=%A
 Type=regular-file
 Path=/
 PathRelativeTo=explicit
-MatchPattern=%M_@v_%a.usr-%a.@u.raw
+MatchPattern=%M_v@v_%a.usr-%a.@u.raw
 
 [Target]
 Type=partition
 Path=auto
-MatchPattern=%M_@v
+MatchPattern=%M_v@v
 MatchPartitionType=usr
 PartitionFlags=0
 ReadOnly=1
