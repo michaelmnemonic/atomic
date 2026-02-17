@@ -3,5 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "features": {}
+  "features": {},
+  "runArgs": ["--privileged"]
 }
