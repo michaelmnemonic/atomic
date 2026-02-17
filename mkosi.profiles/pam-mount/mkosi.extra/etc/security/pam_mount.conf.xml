@@ -14,7 +14,7 @@
 
 		<!-- Volume definitions -->
 
-<volume user="maik" fstype="crypt" path="/dev/disk/by-label/luks-maik" mountpoint="~" options="crypto_name=maik,allow_discard,fstype=btrfs,compress=zstd:1" />
+<volume user="maik" fstype="crypt" path="/dev/disk/by-label/luks-maik" mountpoint="~" options="crypto_name=maik,allow_discard,fstype=ext4" />
 
 		<!-- pam_mount parameters: General tunables -->
 
