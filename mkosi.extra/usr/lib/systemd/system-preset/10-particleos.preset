@@ -13,7 +13,10 @@ enable NetworkManager-wait-online.service
 
 # These are not enabled by default in the default systemd preset.
 enable systemd-timesyncd.service
-enable systemd-homed-firstboot.service
+
+# Do not use systemd-homed
+disable systemd-homed.service
+disable systemd-homed.socket
 
 # Disable avahi in favor of resolved
 disable avahi.*
