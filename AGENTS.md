@@ -26,6 +26,30 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
     *   Identify gaps between the current state and the "ParticleOS-like" goal.
     *   Propose the next logical step as a concept or task for the user to implement.
 
+## Agent Self-Correction & Knowledge Management
+**CRITICAL:** Agents are explicitly encouraged to update this file (`AGENTS.md`) during their session.
+*   If you discover new structural patterns, document them in the **Repository Context** section below.
+*   If a specific command or configuration fails, record it in **Known Issues**.
+*   If a complex feature is successfully verified, record it in **Working Features**.
+*   This file serves as the long-term memory for the agentic workflow.
+
+## Repository Context
+
+### Project Structure
+*   **Root:** Contains global `mkosi.conf` (Arch Linux distribution settings) the `flake.nix` is safe to ignore.
+*   **mkosi.images/:**
+    *   `base/`: The foundation image (Format=directory). Contains the bulk of userspace packages (GNOME, NetworkManager, etc.). Used as a BaseTree for others.
+    *   `atomic/`: The main bootable image (Format=disk). Inherits from `base`. Configures UKI, partitions, and Secure Boot.
+    *   `opencode/` & `vscode/`: System extensions (Format=sysext). Inherit from `base` to ensure binary compatibility.
+
+### Working Features
+*   **Base Composition:** `atomic` correctly inherits from `base` using `BaseTrees`.
+*   **Secure Boot:** Enabled in `atomic` (`SecureBoot=yes`).
+*   **Sysexts:** `opencode` and `vscode` are configured as overlays.
+
+### Known Issues / Workarounds
+*   *None recorded yet.*
+
 ## Operational Mode
 *   **Default:** The agent should **not** modify `mkosi.conf` or other project files directly unless explicitly asked.
 *   **Instruction:** The agent should guide the user on what changes to make, explaining the *why* and *how*.
