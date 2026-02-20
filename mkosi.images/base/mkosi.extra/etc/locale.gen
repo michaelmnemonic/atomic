@@ -15,5 +15,6 @@
 #  A list of supported locales is given in /usr/share/i18n/SUPPORTED
 #  and is included in this file. Uncomment the needed locales below.
 #
-de_DE.UTF-8 UTF-8  
+de_DE.UTF-8 UTF-8
+en_US.UTF-8 UTF-8
 en_US ISO-8859-1  
