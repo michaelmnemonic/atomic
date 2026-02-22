@@ -24,6 +24,7 @@
         erofs-utils
         gnupg
         mkosi
+        zstd
       ]);
       extraBuildCommands = ''
         ln -s ${./keyrings} $out/usr/share/keyrings
