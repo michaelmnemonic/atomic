@@ -7,3 +7,5 @@ mkosi.key
 mkosi.lukskey
 mkosi.output
 mkosi.tools
+mkosi.tools.manifest
+.mkosi-private
