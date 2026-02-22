@@ -34,8 +34,8 @@ fi
 NAME="$NAME"
 ID="$ID"
 ID_LIKE="atomic-$ID"
-PRETTY_NAME="$NAME $VERSION (atomic)"
-FANCY_NAME="\033[0;38:2:252:186:3;1;49m⸭\033[0;38:2:252:186:3;49m $NAME $VERSION (atomic)\033[0m"
+PRETTY_NAME="$NAME $VERSION(atomic)"
+FANCY_NAME="\033[0;38:2:252:186:3;1;49m⸭\033[0;38:2:252:186:3;49m $NAME $VERSION(atomic)\033[0m"
 VERSION="$VERSION"
 VERSION_ID="$VERSION_ID"
 ANSI_COLOR="38:2:252:186:3;1;49"
@@ -45,7 +45,7 @@ HOME_URL="https://github.com/systemd/particleos/"
 EOF
 
     cat >/usr/lib/issue <<EOF
-\e[0;38:2:252:186:3;1;49m▒\e[0m \e[0;38:2:252:186:3;1;49m⸭\e[0;38:2:252:186:3;49m $NAME $VERSION (atomic)\e[0m
+\e[0;38:2:252:186:3;1;49m▒\e[0m \e[0;38:2:252:186:3;1;49m⸭\e[0;38:2:252:186:3;49m $NAME $VERSION(atomic)\e[0m
 \e[0;38:2:252:186:3;1;49m▒\e[0m Kernel \r on an \m (\l)
 
 EOF
