@@ -1,1 +1,2 @@
 root PARTLABEL=atomic-root   /usr/share/key-file luks,discard
+swap PARTLABEL=atomic-swap   /usr/share/key-file luks,discard
