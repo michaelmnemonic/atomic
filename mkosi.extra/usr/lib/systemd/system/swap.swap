@@ -1,0 +1,5 @@
+[Swap]
+What=/swap
+
+[Install]
+WantedBy=swap.target
