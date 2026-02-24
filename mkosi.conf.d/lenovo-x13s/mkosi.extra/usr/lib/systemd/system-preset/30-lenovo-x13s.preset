@@ -1,2 +1,4 @@
 # tpm not supported on this device
-mask dev-tpm0.device
+disable systemd-pcrlock-firmware-code.service
+disable systemd-pcrlock-firmware-config.service
+disable systemd-pcrlock-make-policy.service
