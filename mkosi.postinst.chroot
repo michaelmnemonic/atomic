@@ -56,3 +56,6 @@ EOF
 if [[ -f /usr/lib/tmpfiles.d/debian.conf ]]; then
     sed -i '/\/etc\/pam.d/d' /usr/lib/tmpfiles.d/debian.conf
 fi
+
+# Hide some unneded applications in desktop menus
+echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
