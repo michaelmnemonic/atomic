@@ -7,18 +7,18 @@ ProtectVersion=%A
 Type=regular-file
 Path=/
 PathRelativeTo=explicit
-MatchPattern=%M_v@v_%a.efi
+MatchPattern=%M_@v_%a.efi
 
 [Target]
 Type=regular-file
 Path=/EFI/Linux
 PathRelativeTo=boot
-MatchPattern=%M_v@v_%a+@l-@d.efi \
-             %M_v@v_%a+@l.efi \
-             %M_v@v_%a.efi \
-             %M_v@v+@l-@d.efi \
-             %M_v@v+@l.efi \
-             %M_v@v.efi
+MatchPattern=%M_@v_%a+@l-@d.efi \
+             %M_@v_%a+@l.efi \
+             %M_@v_%a.efi \
+             %M_@v+@l-@d.efi \
+             %M_@v+@l.efi \
+             %M_@v.efi
 Mode=0600
 TriesLeft=3
 TriesDone=0
