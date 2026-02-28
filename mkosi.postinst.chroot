@@ -61,6 +61,4 @@ fi
 echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-start.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
-
-# Only root is allowed to read key-file
-chmod 700 /usr/share/key-file
+echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
