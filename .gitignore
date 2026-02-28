@@ -9,3 +9,5 @@ mkosi.output
 mkosi.tools
 mkosi.tools.manifest
 .mkosi-private
+
+.scripts/.roulette_state_dir
