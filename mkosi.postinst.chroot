@@ -60,4 +60,6 @@ fi
 # Hide some unneded applications in desktop menus
 echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
-echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
+
+# Only root is allowed to read key-file
+chmod 700 /usr/share/key-file
