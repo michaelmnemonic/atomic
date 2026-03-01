@@ -22,11 +22,11 @@ if [[ -f /usr/lib/tmpfiles.d/20-systemd-userdb.conf.example ]]; then
     ln --symbolic 20-systemd-userdb.conf.example /usr/lib/tmpfiles.d/20-systemd-userdb.conf
 fi
 
-# Give ParticleOS its own identity/branding via os-release +
+# Give atomic its own identity/branding via os-release +
 # issue. Note that we keep the original $ID, $VERSION and $VERSION_ID
 # in place, so that we appear like the original underlying OS in most
 # programmatic ways. However, all "pretty"/"fancy" strings now claim
-# we are ParticleOS. Moreover, use $ID_LIKE to identify ParticleOs as
+# we are atomic. Moreover, use $ID_LIKE to identify atomic as
 # such in a programmatic way.
 (
     . /usr/lib/os-release

@@ -36,19 +36,24 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 ## Repository Context
 
 ### Project Structure
-*   **Root:** Contains global `mkosi.conf` (Arch Linux distribution settings) the `flake.nix` is safe to ignore.
-*   **mkosi.images/:**
-    *   `base/`: The foundation image (Format=directory). Contains the bulk of userspace packages (GNOME, NetworkManager, etc.). Used as a BaseTree for others.
-    *   `atomic/`: The main bootable image (Format=disk). Inherits from `base`. Configures UKI, partitions, and Secure Boot.
-    *   `opencode/` & `vscode/`: System extensions (Format=sysext). Inherit from `base` to ensure binary compatibility.
+*   **Root:** Contains global `mkosi.conf` (Debian forky distribution settings) and the main `atomic` image configuration.
+*   **mkosi.conf.d/:** Contains device-specific overrides (e.g., `lenovo-x13s` for ARM64).
+*   **mkosi.images/initrd/:** Configuration for the Unified Kernel Image (UKI) initrd.
+*   **mkosi.repart/:** Partition definitions for `systemd-repart`, including a split `/usr` with **EROFS** and **dm-verity**.
+*   **mkosi.sysupdate/:** Transfer definitions for `systemd-sysupdate` (A/B or partition-based updates).
+*   **mkosi.extra/:** Additional files to include in the image (e.g., `systemd` units, `repart.d` configs).
+*   **mkosi.uki-profiles/:** (Likely) profiles for UKI generation.
 
 ### Working Features
-*   **Base Composition:** `atomic` correctly inherits from `base` using `BaseTrees`.
-*   **Secure Boot:** Enabled in `atomic` (`SecureBoot=yes`).
-*   **Sysexts:** `opencode` and `vscode` are configured as overlays.
+*   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
+*   **Statelessness:** `mkosi.finalize` captures `/etc` into `/usr/share/factory/etc`.
+*   **ARM64 Support:** Targeted support for Lenovo ThinkPad X13s via `mkosi.conf.d/`.
+*   **Branding:** Identity set to "atomic" (derived from ParticleOS) via `mkosi.postinst.chroot`.
 
 ### Known Issues / Workarounds
-*   *None recorded yet.*
+*   **Secure Boot:** Currently disabled (`SecureBoot=no`) in root `mkosi.conf`.
+*   **TPM Masking:** TPM related services and targets are masked on `lenovo-x13s` due to hardware support issues.
+*   **Large Cache:** `mkosi.cache/` contains significant amount of build data (multi-GB).
 
 ## Operational Mode
 *   **Default:** The agent should **not** modify `mkosi.conf` or other project files directly unless explicitly asked.
