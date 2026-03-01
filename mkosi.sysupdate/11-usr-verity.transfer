@@ -16,3 +16,4 @@ MatchPattern=%M_@v_verity
 MatchPartitionType=usr-verity
 PartitionFlags=0
 ReadOnly=1
+InstancesMax=3

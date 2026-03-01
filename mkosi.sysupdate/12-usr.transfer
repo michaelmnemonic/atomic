@@ -16,3 +16,4 @@ MatchPattern=%M_@v
 MatchPartitionType=usr
 PartitionFlags=0
 ReadOnly=1
+InstancesMax=3

@@ -16,3 +16,4 @@ MatchPattern=%M_@v_verity_sig
 MatchPartitionType=usr-verity-sig
 PartitionFlags=0
 ReadOnly=1
+InstancesMax=3

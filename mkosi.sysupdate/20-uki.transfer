@@ -22,4 +22,4 @@ MatchPattern=%M_@v_%a+@l-@d.efi \
 Mode=0600
 TriesLeft=3
 TriesDone=0
-InstancesMax=2
+InstancesMax=3
