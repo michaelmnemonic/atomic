@@ -7,3 +7,4 @@ disable systemd-pcrlock-make-policy.service
 enable pd-mapper.service
 enable tqftpserv.service
 enable qrtr-ns.service
+enable restart-remoteproc.service
