@@ -1,8 +1,7 @@
 [Unit]
 Description=Start Qualcomm remoteprocs (SLPI/ADSP/CDSP)
 DefaultDependencies=no
-After=initrd-root-fs.target local-fs.target
-Before=sysinit.target
+After=qrtr-ns.service pd-mapper.service tqftpserv.service
 
 [Service]
 Type=oneshot
@@ -11,4 +10,4 @@ ExecStartPre=/bin/sh -c 'until [ -f /lib/firmware/qcom/sc8280xp/LENOVO/21BX/qcsl
 ExecStart=/bin/sh -c 'echo start > /sys/class/remoteproc/remoteproc0/state; echo start > /sys/class/remoteproc/remoteproc1/state; echo start > /sys/class/remoteproc/remoteproc2/state'
 
 [Install]
-WantedBy=sysinit.target
+WantedBy=multi-user.target
