@@ -64,6 +64,4 @@ echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
 
 # Qualcomm PD Mapper expects .jsn files in the firmware root
-# Search for the Lenovo X13s specific firmware directory
-echo "Creating symlink for audio topology..."
-ln -sf "/usr/lib/firmware/qcom/sc8280xp/LENOVO/21BXaudioreach-tplg.bin" "/usr/lib/firmware/qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin"
+cp "/usr/lib/firmware/qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin" "/usr/lib/firmware/qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin"
