@@ -2,3 +2,8 @@
 disable systemd-pcrlock-firmware-code.service
 disable systemd-pcrlock-firmware-config.service
 disable systemd-pcrlock-make-policy.service
+
+# enable qualcomm audio services
+enable pd-mapper.service
+enable tqftpserv.service
+enable qrtr-ns.service
