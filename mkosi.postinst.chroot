@@ -62,3 +62,13 @@ echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-start.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
+
+# Qualcomm PD Mapper expects .jsn files in the firmware root
+# Search for the Lenovo X13s specific firmware directory
+FW_DIR="/usr/lib/firmware/qcom/sc8280xp/LENOVO/21BX"
+if [ -d "$FW_DIR" ]; then
+    echo "Creating symlinks for Qualcomm PD maps..."
+    for f in "$FW_DIR"/*.jsn; do
+        ln -sf "$f" "/usr/lib/firmware/$(basename "$f")"
+    done
+fi
