@@ -58,4 +58,5 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 ## Operational Mode
 *   **Default:** The agent should **not** modify `mkosi.conf` or other project files directly unless explicitly asked.
 *   **Instruction:** The agent should guide the user on what changes to make, explaining the *why* and *how*.
+*   **Root Access:** If the agent needs to execute a program as root, it must use `run0`.
 *   **Exception:** The agent may create or modify auxiliary files (like this `AGENTS.md`) or run diagnostic commands (`mkosi summary`, `ls`, `cat`) freely.
