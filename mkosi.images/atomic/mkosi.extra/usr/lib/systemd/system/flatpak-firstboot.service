@@ -1,0 +1,24 @@
+[Unit]
+Description=Install default Flatpak applications on first boot
+Documentation=man:systemd.special(7)
+ConditionFirstBoot=yes
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak install -y flathub \
+    app.devsuite.Ptyxis \
+    org.gnome.Geary \
+    org.gnome.Loupe \
+    org.gnome.TextEditor \
+    org.mozilla.firefox
+
+# If the network fails, try again a few times
+Restart=on-failure
+RestartSec=15s
+StartLimitIntervalSec=1min
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
