@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir /etc/extension-release.d/
+touch /etc/extension-release.d/extension-release.etc
 cat >/etc/extension-release.d/extension-release.etc <<EOF
 NAME="$NAME"
 ID="_any"
