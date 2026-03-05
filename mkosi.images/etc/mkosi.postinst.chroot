@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cat >/etc/extension-release.d/extension-release.etc <<EOF
+NAME="$NAME"
+ID="_any"
+ID_LIKE="atomic-$ID"
+VERSION="$VERSION"
+VERSION_ID="$VERSION_ID"
+EOF
