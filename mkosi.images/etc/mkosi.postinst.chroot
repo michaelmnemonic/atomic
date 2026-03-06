@@ -3,9 +3,9 @@
 mkdir /etc/extension-release.d/
 touch /etc/extension-release.d/extension-release.etc
 cat >/etc/extension-release.d/extension-release.etc <<EOF
-NAME="$NAME"
-ID="_any"
-ID_LIKE="atomic-$ID"
-VERSION="$VERSION"
-VERSION_ID="$VERSION_ID"
+NAME="$IMAGE_ID"
+ID="$DISTRIBUTION"
+ID_LIKE="atomic-$IMAGE_ID"
+VERSION="$IMAGE_VERSION"
+VERSION_ID="$IMAGE_VERSION"
 EOF
