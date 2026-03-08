@@ -3,5 +3,3 @@
 set -e
 
 # Remove some packages without their dependencies
-/usr/bin/dpkg -r --force-depends desktop-base
-/usr/bin/dpkg -r --force-depends fonts-quicksand
