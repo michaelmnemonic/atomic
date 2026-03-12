@@ -8,6 +8,12 @@
             "type": "shell",
             "command": "mkosi --force",
             "group": "build",
+        },
+        {
+            "label": "atomic: bump",
+            "type": "shell",
+            "command": "${workspaceFolder}/.scripts/bump_snapshot.py",
+            "problemMatcher": []
         }
     ]
 }
