@@ -2,11 +2,6 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 set -e
 
-if command -v authselect >/dev/null; then
-    authselect select local
-    authselect enable-feature with-systemd-homed
-fi
-
 if [[ -d /etc/pam.d ]]; then
     find /etc/pam.d -mindepth 1 -exec mv {} /usr/lib/pam.d \;
     rmdir /etc/pam.d
@@ -15,12 +10,6 @@ fi
 # Get rid of obsolete stuff in the pam stack.
 find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_shells.so/d' {} \;
 find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_securetty.so/d' {} \;
-
-# Fedora disables the userdb ssh dropin by default, but helpfully leaves it available in
-# the package so that we can just symlink it to a name that will be picked up by systemd-tmpfiles.
-if [[ -f /usr/lib/tmpfiles.d/20-systemd-userdb.conf.example ]]; then
-    ln --symbolic 20-systemd-userdb.conf.example /usr/lib/tmpfiles.d/20-systemd-userdb.conf
-fi
 
 # Give atomic its own identity/branding via os-release +
 # issue. Note that we keep the original $ID, $VERSION and $VERSION_ID
@@ -57,8 +46,8 @@ if [[ -f /usr/lib/tmpfiles.d/debian.conf ]]; then
     sed -i '/\/etc\/pam.d/d' /usr/lib/tmpfiles.d/debian.conf
 fi
 
-# Hide some unneded applications in desktop menus
-echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
-echo "Hidden=true" >> /usr/share/applications/syncthing-start.desktop
-echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
-echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
+# # Hide some unneded applications in desktop menus
+# echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
+# echo "Hidden=true" >> /usr/share/applications/syncthing-start.desktop
+# echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
+# echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
