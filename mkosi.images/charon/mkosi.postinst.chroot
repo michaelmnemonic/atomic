@@ -2,6 +2,51 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 set -e
 
-# Remove some packages without their dependencies
-# /usr/bin/dpkg -r --force-depends desktop-base
-# /usr/bin/dpkg -r --force-depends fonts-quicksand
+if [[ -d /etc/pam.d ]]; then
+    find /etc/pam.d -mindepth 1 -exec mv {} /usr/lib/pam.d \;
+    rmdir /etc/pam.d
+fi
+
+# Get rid of obsolete stuff in the pam stack.
+find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_shells.so/d' {} \;
+find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_securetty.so/d' {} \;
+
+
+# Give this image its own identity/branding via os-release +
+# issue. Note that we keep the original $ID, $VERSION and $VERSION_ID
+# in place, so that we appear like the original underlying OS in most
+# programmatic ways. However, all "pretty"/"fancy" strings now reference this image. 
+(
+    . /usr/lib/os-release
+    cat >/usr/lib/os-release <<EOF
+NAME="$NAME"
+ID="$ID"
+ID_LIKE="charon-$ID"
+PRETTY_NAME="$NAME $VERSION(charon)"
+FANCY_NAME="\033[0;38:2:252:186:3;1;49m⸭\033[0;38:2:252:186:3;49m $NAME $VERSION(charon)\033[0m"
+VERSION="$VERSION"
+VERSION_ID="$VERSION_ID"
+ANSI_COLOR="38:2:252:186:3;1;49"
+ANSI_COLOR_REVERSE="48;2;252;186;3;1;30"
+DEFAULT_HOSTNAME="charon-????-????"
+HOME_URL="https://github.com/systemd/particleos/"
+EOF
+
+    cat >/usr/lib/issue <<EOF
+\e[0;38:2:252:186:3;1;49m▒\e[0m \e[0;38:2:252:186:3;1;49m⸭\e[0;38:2:252:186:3;49m $NAME $VERSION(charon)\e[0m
+\e[0;38:2:252:186:3;1;49m▒\e[0m Kernel \r on an \m (\l)
+
+EOF
+)
+
+# Debian/Ubuntu PAM patches break /usr/lib/pam.d/ so copy to factory
+# TODO: drop after https://salsa.debian.org/vorlon/pam/-/merge_requests/26 is merged
+if [[ -f /usr/lib/tmpfiles.d/debian.conf ]]; then
+    sed -i '/\/etc\/pam.d/d' /usr/lib/tmpfiles.d/debian.conf
+fi
+
+# Hide some unneded applications in desktop menus
+echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
+echo "Hidden=true" >> /usr/share/applications/syncthing-start.desktop
+echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
+echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
