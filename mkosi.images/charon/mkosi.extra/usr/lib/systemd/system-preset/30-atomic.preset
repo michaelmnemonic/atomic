@@ -1,6 +1,0 @@
-# no need to wait for network
-disable systemd-networkd-wait-online.service
-disable NetworkManager-wait-online.service
-
-# enable graphical boot
-enable gdm.service
