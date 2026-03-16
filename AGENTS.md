@@ -36,24 +36,30 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 ## Repository Context
 
 ### Project Structure
-*   **Root:** Contains global `mkosi.conf` (Debian forky distribution settings) and the main `atomic` image configuration.
+*   **Root:** Contains global `mkosi.conf` (Debian sid distribution settings) and the main `atomic` image configuration.
 *   **mkosi.conf.d/:** Contains device-specific overrides (e.g., `lenovo-x13s` for ARM64).
 *   **mkosi.images/initrd/:** Configuration for the Unified Kernel Image (UKI) initrd.
-*   **mkosi.repart/:** Partition definitions for `systemd-repart`, including a split `/usr` with **EROFS** and **dm-verity**.
+*   **mkosi.images/base/:** Base image configuration with profiles for GNOME and KDE.
+*   **mkosi.images/charon/:** ARM64-specific configuration for Lenovo ThinkPad X13s with dm-verity and EROFS.
+*   **mkosi.images/juno/:** x86-64-specific configuration with dm-verity and EROFS.
+*   **mkosi.images/vscode/:** Configuration for a VSCode-specific image.
+*   **mkosi.extra.bootable/:** Additional files to include in the image (e.g., `systemd` units, `repart.d` configs).
 *   **mkosi.sysupdate/:** Transfer definitions for `systemd-sysupdate` (A/B or partition-based updates).
-*   **mkosi.extra/:** Additional files to include in the image (e.g., `systemd` units, `repart.d` configs).
-*   **mkosi.uki-profiles/:** (Likely) profiles for UKI generation.
 
 ### Working Features
 *   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
 *   **Statelessness:** `mkosi.finalize` captures `/etc` into `/usr/share/factory/etc`.
-*   **ARM64 Support:** Targeted support for Lenovo ThinkPad X13s via `mkosi.conf.d/`.
+*   **ARM64 Support:** Targeted support for Lenovo ThinkPad X13s via `mkosi.images/charon/`.
+*   **x86-64 Support:** Configuration for x86-64 systems via `mkosi.images/juno/`.
 *   **Branding:** Identity set to "atomic" (derived from ParticleOS) via `mkosi.postinst.chroot`.
+*   **Unified Kernel Images (UKI):** Support for UKI generation with initrd and base trees.
+*   **Partition Updates:** `systemd-sysupdate` configurations for updating partitions (usr, usr-verity, usr-verity-sig).
 
 ### Known Issues / Workarounds
 *   **Secure Boot:** Currently disabled (`SecureBoot=no`) in root `mkosi.conf`.
 *   **TPM Masking:** TPM related services and targets are masked on `lenovo-x13s` due to hardware support issues.
 *   **Large Cache:** `mkosi.cache/` contains significant amount of build data (multi-GB).
+*   **TPM Support:** TPM is not supported on Lenovo ThinkPad X13s, leading to masking of related services.
 
 ## Operational Mode
 *   **Default:** The agent should **not** modify `mkosi.conf` or other project files directly unless explicitly asked.
