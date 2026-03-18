@@ -24,6 +24,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Decrypt secrets
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.key mkosi.key.gpg
+          gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.crt mkosi.crt.gpg
+
       - name: Build the image
         run: |
           mkosi build --force
