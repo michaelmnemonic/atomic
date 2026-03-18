@@ -44,11 +44,13 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           archive: false     
+          if-no-files-found: ignore
           path: mkosi.output/charon_*_arm64.raw
           retention-days: 7
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          archive: false     
+          archive: false  
+          if-no-files-found: ignore   
           path: mkosi.output/juno_*_x86-64.raw
           retention-days: 7
