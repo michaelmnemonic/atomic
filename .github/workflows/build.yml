@@ -45,6 +45,32 @@ jobs:
         with:
           archive: false     
           if-no-files-found: ignore
+          path: mkosi.output/base_*_arm64.tar.zstd
+          retention-days: 7
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base_*_arm64.manifest
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base_*_x86-64.tar.zstd
+          retention-days: 7
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base_*_x86-64.manifest
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          archive: false     
+          if-no-files-found: ignore
           path: mkosi.output/charon_*_arm64.raw
           retention-days: 7
       - name: Upload artifacts
