@@ -1,4 +1,4 @@
-name: Build Debian Image for "juno"
+name: Build output artifacts
 
 on:
   push:
