@@ -27,7 +27,9 @@ jobs:
       - name: Build the image
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.key mkosi.key.gpg
+          chmod 700 mkosi.key
           gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.crt mkosi.crt.gpg
+          chmod 700 mkosi.crt
           mkosi build --force
           rm mkosi.key
           rm mkosi.crt
