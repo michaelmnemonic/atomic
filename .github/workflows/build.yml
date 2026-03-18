@@ -28,6 +28,8 @@ jobs:
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.key mkosi.key.gpg
           gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.crt mkosi.crt.gpg
+          chown 700 mkosi.key
+          chown 700 mkosi.crt
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY}}
 
