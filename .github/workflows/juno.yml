@@ -6,7 +6,7 @@ on:
     - main
   schedule:
     - cron: '0 3 * * *' # Every day at 3 AM UTC
-  workflow_dispatch:     # Allows manual triggering
+  workflow_dispatch:    # Allows manual triggering
 
 permissions:
   contents: write
@@ -16,31 +16,18 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Install dependencies
-        run: |
-          sudo apt update --assume-yes
-          sudo apt-get install --assume-yes --no-install-recommends debootstrap debian-archive-keyring debian-keyring mkosi systemd-ukify
+      - name: setup-mkosi
+        uses: systemd/mkosi@v26
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show image summary
-        run: mkosi summary
-
       - name: Build the image
         run: |
-          sudo mkosi --force
-        
-      - name: Set release tag
-        id: tag
-        run: echo "tag=nightly-debian-$(date +%Y%m%d)" >> "$GITHUB_OUTPUT"
+          sudo mkosi build --force
 
-      - name: Create GitHub Release with Image
-        uses: softprops/action-gh-release@v1
-        if: github.event_name == 'workflow_dispatch'
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
         with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          files: mkosi.output/image.tar.zst
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: mkosi.outputs/*
       
