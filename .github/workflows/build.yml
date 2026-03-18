@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - sid
-  schedule:
   workflow_dispatch:    # Allows manual triggering
 
 permissions:
