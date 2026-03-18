@@ -24,18 +24,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Decrypt secrets
+      - name: Build the image
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.key mkosi.key.gpg
           gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_KEY" --output mkosi.crt mkosi.crt.gpg
-          sudo chown 700 mkosi.key
-          sudo chown 700 mkosi.crt
+          mkosi build --force
+          rm mkosi.key
+          rm mkosi.crt
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY}}
-
-      - name: Build the image
-        run: |
-          mkosi build --force
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
