@@ -11,7 +11,10 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        host: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.host }}
 
     steps:
       - name: Install mkosi
