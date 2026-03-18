@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: setup-mkosi
+      - name: Install mkosi
         uses: systemd/mkosi@v26
 
       - name: Checkout repository
