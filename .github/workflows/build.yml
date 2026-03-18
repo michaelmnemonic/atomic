@@ -12,6 +12,7 @@ permissions:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         host: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.host }}
