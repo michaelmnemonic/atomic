@@ -45,3 +45,4 @@ jobs:
         with:
           archive: false     
           path: mkosi.output/*
+          retention-days: 7
