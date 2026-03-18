@@ -47,7 +47,7 @@ jobs:
         with:
           archive: false     
           if-no-files-found: ignore
-          path: mkosi.output/base_*_arm64.tar.zstd
+          path: mkosi.output/base_*_arm64.tar.zst
           retention-days: 7
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
@@ -60,7 +60,7 @@ jobs:
         with:
           archive: false     
           if-no-files-found: ignore
-          path: mkosi.output/base_*_x86-64.tar.zstd
+          path: mkosi.output/base_*_x86-64.tar.zst
           retention-days: 7
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
