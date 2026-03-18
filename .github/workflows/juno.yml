@@ -3,7 +3,7 @@ name: Build Debian Image for "juno"
 on:
   push:
     branches:
-    - main
+    - sid
   schedule:
   workflow_dispatch:    # Allows manual triggering
 
