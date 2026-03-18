@@ -18,6 +18,10 @@ jobs:
     runs-on: ${{ matrix.host }}
 
     steps:
+      - name: Update repositories
+        run: |
+          sudo apt -y update
+
       - name: Install mkosi
         uses: systemd/mkosi@v26
 
