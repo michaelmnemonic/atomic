@@ -43,6 +43,7 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY}}
 
       - name: Upload base arm64 tar
+        if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
         with:
           name: base-arm64-tar
@@ -51,6 +52,7 @@ jobs:
           path: mkosi.output/base_*_arm64.tar.zst
           retention-days: 7
       - name: Upload base arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
         with:
           name: base-arm64-manifest
@@ -58,6 +60,7 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/base_*_arm64.manifest
       - name: Upload base x86-64 tar
+        if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
         with:
           name: base-x86-64-tar
@@ -66,6 +69,7 @@ jobs:
           path: mkosi.output/base_*_x86-64.tar.zst
           retention-days: 7
       - name: Upload base x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
         with:
           name: base-x86-64-manifest
@@ -73,6 +77,7 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/base_*_x86-64.manifest
       - name: Upload charon arm64 raw
+        if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
         with:
           name: charon-arm64-raw
@@ -81,6 +86,7 @@ jobs:
           path: mkosi.output/charon_*_arm64.raw
           retention-days: 7
       - name: Upload charon arm64 usr raw
+        if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
         with:
           name: charon-arm64-usr-raw
@@ -89,6 +95,7 @@ jobs:
           path: mkosi.output/charon_*_arm64.usr-arm64.*.raw
           retention-days: 7
       - name: Upload charon arm64 usr verity raw
+        if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
         with:
           name: charon-arm64-usr-verity-raw
@@ -97,6 +104,7 @@ jobs:
           path: mkosi.output/charon_*_arm64.usr-arm64-verity.*.raw
           retention-days: 7
       - name: Upload charon arm64 usr verity sig raw
+        if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
         with:
           name: charon-arm64-usr-verity-sig-raw
@@ -105,6 +113,7 @@ jobs:
           path: mkosi.output/charon_*_arm64.usr-arm64-verity-sig.*.raw
           retention-days: 7
       - name: Upload juno x86-64 raw
+        if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
         with:
           name: juno-x86-64-raw
@@ -113,6 +122,7 @@ jobs:
           path: mkosi.output/juno_*_x86-64.raw
           retention-days: 7
       - name: Upload juno x86-64 usr raw
+        if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
         with:
           name: juno-x86-64-usr-raw
@@ -121,6 +131,7 @@ jobs:
           path: mkosi.output/juno_*_x86-64.usr-x86-64.*.raw
           retention-days: 7
       - name: Upload juno x86-64 usr verity raw
+        if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
         with:
           name: juno-x86-64-usr-verity-raw
@@ -129,6 +140,7 @@ jobs:
           path: mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw
           retention-days: 7
       - name: Upload juno x86-64 usr verity sig raw
+        if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
         with:
           name: juno-x86-64-usr-verity-sig-raw
