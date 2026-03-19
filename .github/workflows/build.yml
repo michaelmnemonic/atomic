@@ -2,8 +2,8 @@ name: Build output artifacts
 
 on:
   push:
-    branches:
-    - sid
+  pull_request:
+    types: [opened, reopened]
   workflow_dispatch:    # Allows manual triggering
 
 permissions:
