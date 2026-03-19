@@ -124,7 +124,20 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw
           retention-days: 7
-      - name: Relese main branch
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: mkosi.output
+          merge-multiple: true
+
+      - name: Release main branch
         uses: andelf/nightly-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
