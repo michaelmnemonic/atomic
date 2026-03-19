@@ -124,3 +124,26 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw
           retention-days: 7
+      - name: Relese main branch
+        uses: andelf/nightly-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: main
+          draft: false
+          name: 'Atomic main branch $$'
+          prerelease: true
+          body: |
+            This release contains the current HEAD of the main branch.
+            It's unstable compared to the tagged releases, **use it with caution**!
+          files: |
+            mkosi.output/base_*_arm64.tar.zst
+            mkosi.output/base_*_x86-64.manifest
+            mkosi.output/charon_*_arm64.raw
+            mkosi.output/charon_*_arm64.usr-arm64.*.raw
+            mkosi.output/charon_*_arm64.usr-arm64-verity.*.raw
+            mkosi.output/charon_*_arm64.usr-arm64-verity-sig.*.raw
+            mkosi.output/juno_*_x86-64.raw
+            mkosi.output/juno_*_x86-64.usr-x86-64.*.raw
+            mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw
+            mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw
