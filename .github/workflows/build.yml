@@ -137,6 +137,7 @@ jobs:
           path: mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw
           retention-days: 7
   release:
+    if: github.ref == 'refs/heads/sid'
     needs: build
     runs-on: ubuntu-latest
     steps:
