@@ -150,6 +150,7 @@ jobs:
   upload:
     needs: build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/sid'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
