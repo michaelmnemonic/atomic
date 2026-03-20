@@ -2,8 +2,6 @@ name: Build output artifacts
 
 on:
   push:
-  pull_request:
-    types: [opened, reopened, ready_for_review]
   workflow_dispatch:    # Allows manual triggering
 
 permissions:
