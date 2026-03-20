@@ -177,11 +177,9 @@ jobs:
           files: |
             mkosi.output/base_*_arm64.tar.zst
             mkosi.output/base_*_x86-64.manifest
-            mkosi.output/charon_*_arm64.raw
             mkosi.output/charon_*_arm64.usr-arm64.*.raw
             mkosi.output/charon_*_arm64.usr-arm64-verity.*.raw
             mkosi.output/charon_*_arm64.usr-arm64-verity-sig.*.raw
-            mkosi.output/juno_*_x86-64.raw
             mkosi.output/juno_*_x86-64.usr-x86-64.*.raw
             mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw
             mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw
