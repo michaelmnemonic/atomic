@@ -169,7 +169,7 @@ jobs:
         with:
           tag_name: main
           draft: false
-          name: 'Atomic main branch $(./mkosi.version)'
+          name: 'Atomic main branch $$'
           prerelease: true
           body: |
             This release contains the current HEAD of the main branch.
