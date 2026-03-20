@@ -146,6 +146,19 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw
           retention-days: 1
+
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8.0.1
+        with:
+          path: mkosi.output
+          merge-multiple: true
       - name: Upload files
         env:
           USER: ${{ secrets.USER }}
