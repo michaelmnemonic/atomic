@@ -198,7 +198,7 @@ jobs:
           name: juno-x86-64-usr-verity-sig-raw-checksum
           archive: false     
           if-no-files-found: ignore
-          path: mkosi.output/juno_*_x86-64.uSHA256SUMS
+          path: mkosi.output/juno_*_x86-64.SHA256SUMS
           retention-days: 1
 
   upload:
