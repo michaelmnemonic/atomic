@@ -4,3 +4,6 @@ disable NetworkManager-wait-online.service
 
 # enable graphical boot
 enable gdm.service
+
+# enable nix daemon
+enable nix-daemon.socket
