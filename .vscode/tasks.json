@@ -44,6 +44,14 @@
                 "deploy"
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "fetch keyrings",
+            "detail": "Downloads and extracts Debian archive keyrings into .keyrings/",
+            "type": "shell",
+            "command": "${workspaceFolder}/.scripts/fetch-debian-keyrings.sh",
+            "problemMatcher": [],
+            "icon": {"id": "key"}
         }
     ]
 }
