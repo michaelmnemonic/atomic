@@ -168,6 +168,8 @@ jobs:
         run: |
           shopt -s nullglob
           for file in mkosi.output/base_*_arm64.tar.zst \
+                      mkosi.output/base_*_arm64.manifest \
+                      mkosi.output/base_*_x86-64.tar.zst \
                       mkosi.output/base_*_x86-64.manifest \
                       mkosi.output/charon_*_arm64.usr-arm64.*.raw \
                       mkosi.output/charon_*_arm64.usr-arm64-verity.*.raw \
