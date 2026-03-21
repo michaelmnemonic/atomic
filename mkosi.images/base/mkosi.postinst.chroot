@@ -74,3 +74,11 @@ if command -v direnv >/dev/null; then
 fi
 EOF
 fi
+
+# Workaround for localectl not recognizing *.kmap.gz files from console-data
+# See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=790955
+if [ -d /usr/share/keymaps ]; then
+    find /usr/share/keymaps -type f -name "*.kmap.gz" | while read -r f; do
+        ln -sf "${f##*/}" "${f%.kmap.gz}.map.gz"
+    done
+fi
