@@ -175,5 +175,5 @@ jobs:
                       mkosi.output/juno_*_x86-64.usr-x86-64.*.raw \
                       mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw \
                       mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw; do
-            curl -T "$file" -u "$USER:$PASSWORD" "$HOST"
+            curl -L -T "$file" -u "$USER:$PASSWORD" "$HOST"
           done
