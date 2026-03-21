@@ -63,3 +63,14 @@ echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
 
 # Enable flakes
 echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
+
+# Enable direnv system-wide for bash interactive shells
+if [ -f /etc/bash.bashrc ]; then
+    cat <<'EOF' >> /etc/bash.bashrc
+
+# Enable direnv
+if command -v direnv >/dev/null; then
+    eval "$(direnv hook bash)"
+fi
+EOF
+fi
