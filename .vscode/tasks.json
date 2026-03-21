@@ -4,33 +4,43 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "mkosi: build",
+            "label": "build",
             "detail": "Builds an image locally",
             "type": "shell",
             "command": "../mkosi/bin/mkosi --force",
             "group": "build",
+            "icon": {"id": "build"}
         },
         {
-            "label": "atomic: bump",
+            "label": "bump snapshot",
             "detail": "Determines if a more recent archive snapshots exists",
             "type": "shell",
             "command": "${workspaceFolder}/.scripts/bump_snapshot.py",
             "problemMatcher": []
         },
         {
-            "label": "mkosi: deploy",
+            "label": "deploy",
             "detail": "Deploys the most recent locally build image to the device",
             "type": "shell",
             "command": "run0 /usr/lib/systemd/systemd-sysupdate --definitions mkosi.sysupdate/ --transfer-source mkosi.output/ update",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "icon": {"id": "download"}
         },
         {
-            "label": "mkosi: build --> deploy",
+            "label": "clean",
+            "detail": "Deletes previously build artifacts",
+            "type": "shell",
+            "command": "rm -rf mkosi.output/ mkosi.cache/ mkosi.tools/",
+            "problemMatcher": [],
+            "icon": {"id": "eraser"}
+        },
+        {
+            "label": "build --> deploy",
             "detail": "Builds and then deploys the image",
             "dependsOrder": "sequence",
             "dependsOn": [
-                "mkosi: build",
-                "mkosi: deploy"
+                "build",
+                "deploy"
             ],
             "problemMatcher": []
         }
