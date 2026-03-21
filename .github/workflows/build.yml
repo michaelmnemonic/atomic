@@ -256,7 +256,9 @@ jobs:
           gpg --batch --import signing.key
           rm signing.key
           gpg --batch --yes --armor --detach-sign --local-user michaelmnemonic@posteo.eu SHA256SUMS
+          gpg --batch --yes --armor --detach-sign --local-user michaelmnemonic@posteo.eu --output SHA256SUMS.gpg SHA256SUMS
           
-          # Upload SHA256SUMS and its signature
+          # Upload SHA256SUMS and its signatures
           curl --fail --show-error -L -T "SHA256SUMS" -u "$USER:$PASSWORD" "$base_url/SHA256SUMS"
           curl --fail --show-error -L -T "SHA256SUMS.asc" -u "$USER:$PASSWORD" "$base_url/SHA256SUMS.asc"
+          curl --fail --show-error -L -T "SHA256SUMS.gpg" -u "$USER:$PASSWORD" "$base_url/SHA256SUMS.gpg"
