@@ -16,7 +16,8 @@
             "detail": "Determines if a more recent archive snapshots exists",
             "type": "shell",
             "command": "${workspaceFolder}/.scripts/bump_snapshot.py",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "icon": {"id": "cloud-download"}
         },
         {
             "label": "deploy",
