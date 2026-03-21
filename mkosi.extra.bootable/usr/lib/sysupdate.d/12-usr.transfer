@@ -1,0 +1,16 @@
+[Transfer]
+ProtectVersion=%A
+
+[Source]
+Type=url-file
+Path=https://files.maikkoehler.eu/Updates
+MatchPattern=%M_@v_%a.usr-%a.@u.raw
+
+[Target]
+Type=partition
+Path=auto
+MatchPattern=%M_@v
+MatchPartitionType=usr
+PartitionFlags=0
+ReadOnly=1
+InstancesMax=3
