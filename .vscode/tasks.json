@@ -9,7 +9,7 @@
             "type": "shell",
             "command": "../mkosi/bin/mkosi --force",
             "group": "build",
-            "icon": {"id": "build"}
+            "icon": {"id": "play"}
         },
         {
             "label": "bump snapshot",
