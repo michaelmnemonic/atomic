@@ -4,16 +4,54 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "mkosi: build image",
+            "label": "build",
+            "detail": "Builds an image locally",
             "type": "shell",
-            "command": "mkosi --force",
+            "command": "../mkosi/bin/mkosi --force",
             "group": "build",
+            "icon": {"id": "play"}
         },
         {
-            "label": "atomic: bump",
+            "label": "bump snapshot",
+            "detail": "Determines if a more recent archive snapshots exists",
             "type": "shell",
             "command": "${workspaceFolder}/.scripts/bump_snapshot.py",
+            "problemMatcher": [],
+            "icon": {"id": "cloud-download"}
+        },
+        {
+            "label": "deploy",
+            "detail": "Deploys the most recent locally build image to the device",
+            "type": "shell",
+            "command": "run0 /usr/lib/systemd/systemd-sysupdate --definitions mkosi.sysupdate/ --transfer-source mkosi.output/ update",
+            "problemMatcher": [],
+            "icon": {"id": "download"}
+        },
+        {
+            "label": "clean",
+            "detail": "Deletes previously build artifacts",
+            "type": "shell",
+            "command": "rm -rf mkosi.output/ mkosi.cache/ mkosi.tools/",
+            "problemMatcher": [],
+            "icon": {"id": "eraser"}
+        },
+        {
+            "label": "build --> deploy",
+            "detail": "Builds and then deploys the image",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "build",
+                "deploy"
+            ],
             "problemMatcher": []
+        },
+        {
+            "label": "fetch keyrings",
+            "detail": "Downloads and extracts Debian archive keyrings into .keyrings/",
+            "type": "shell",
+            "command": "${workspaceFolder}/.scripts/fetch-debian-keyrings.sh",
+            "problemMatcher": [],
+            "icon": {"id": "key"}
         }
     ]
 }
