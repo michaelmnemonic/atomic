@@ -54,6 +54,7 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 *   **Branding:** Identity set to "atomic" (derived from ParticleOS) via `mkosi.postinst.chroot`.
 *   **Unified Kernel Images (UKI):** Support for UKI generation with initrd and base trees.
 *   **Partition Updates:** `systemd-sysupdate` configurations for updating partitions (usr, usr-verity, usr-verity-sig).
+*   **Build Artifact Publishing:** `.github/workflows/build.yml` now checks whether a remote artifact already exists before uploading, so rebuilds do not overwrite previously published files.
 
 ### Known Issues / Workarounds
 *   **Secure Boot:** Currently disabled (`SecureBoot=no`) in root `mkosi.conf`.
