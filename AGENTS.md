@@ -61,6 +61,7 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 *   **TPM Masking:** TPM related services and targets are masked on `lenovo-x13s` due to hardware support issues.
 *   **Large Cache:** `mkosi.cache/` contains significant amount of build data (multi-GB).
 *   **TPM Support:** TPM is not supported on Lenovo ThinkPad X13s, leading to masking of related services.
+*   **UKI DeviceTrees on X13s:** `mkosi` treats `Devicetrees=` as glob patterns for automatic hardware selection, searching multiple kernel DT locations (including Debian’s `/usr/lib/linux-image-<kver>/`). That means even a single `Devicetrees=` entry can become one or more `.dtbauto` sections in the UKI, depending on how many files match. On Lenovo X13s-class arm64 systems, overriding the firmware DT this way can prevent boot: Linux EFI stub documentation warns that replacing the firmware DT loses runtime firmware data, and `systemd-stub` only matches `.dtbauto` entries against the firmware DT’s first `compatible` string before requesting `EFI_DT_FIXUP_PROTOCOL` fixups. Prefer the firmware-provided DT when possible; if an override is required, validate the actual matched DT list and confirm firmware fixups are sufficient or use a firmware-side/device-detection DT loader approach.
 
 ## Operational Mode
 *   **Default:** The agent should **not** modify `mkosi.conf` or other project files directly unless explicitly asked.
