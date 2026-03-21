@@ -224,20 +224,16 @@ jobs:
           base_url="${HOST%/}"
           for file in mkosi.output/base_*_arm64.tar.zst \
                       mkosi.output/base_*_arm64.manifest \
-                      mkosi.output/base_*_arm64.SHA256SUMS \
                       mkosi.output/base_*_x86-64.tar.zst \
                       mkosi.output/base_*_x86-64.manifest \
-                      mkosi.output/base_*_x86-64.SHA256SUMS \
                       mkosi.output/charon_*_arm64.efi \
                       mkosi.output/charon_*_arm64.usr-arm64.*.raw \
                       mkosi.output/charon_*_arm64.usr-arm64-verity.*.raw \
                       mkosi.output/charon_*_arm64.usr-arm64-verity-sig.*.raw \
-                      mkosi.output/charon_*_arm64.SHA256SUMS \
                       mkosi.output/juno_*_x86-64.efi \
                       mkosi.output/juno_*_x86-64.usr-x86-64.*.raw \
                       mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw \
-                      mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw \
-                      mkosi.output/juno_*_x86-64.SHA256SUMS; do
+                      mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw; do
             remote_url="$base_url/$(basename "$file")"
             if curl --silent --show-error --fail --head -u "$USER:$PASSWORD" "$remote_url" >/dev/null; then
               echo "Skipping existing file: $(basename "$file")"
@@ -246,3 +242,12 @@ jobs:
 
             curl --fail --show-error -L -T "$file" -u "$USER:$PASSWORD" "$remote_url"
           done
+
+          # Consolidate SHA256SUMS
+          cat mkosi.output/*.SHA256SUMS > new_hashes
+          if curl --silent --show-error --fail -u "$USER:$PASSWORD" "$base_url/SHA256SUMS" -o old_hashes; then
+              awk '!seen[$2]++' new_hashes old_hashes > SHA256SUMS
+          else
+              cat new_hashes > SHA256SUMS
+          fi
+          curl --fail --show-error -L -T "SHA256SUMS" -u "$USER:$PASSWORD" "$base_url/SHA256SUMS"
