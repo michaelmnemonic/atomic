@@ -7,7 +7,7 @@
             "label": "mkosi: build",
             "detail": "Builds an image locally",
             "type": "shell",
-            "command": "mkosi --force",
+            "command": "../mkosi/bin/mkosi --force",
             "group": "build",
         },
         {
