@@ -200,6 +200,58 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/juno_*_x86-64.SHA256SUMS
           retention-days: 1
+      - name: Upload vscode arm64 raw
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-arm64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/vscode_*_arm64.raw
+          retention-days: 1
+      - name: Upload vscode arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-arm64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/vscode*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload vscode arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/vscode*_arm64.manifest
+      - name: Upload vscode x86-64 raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-x86-64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/vscode_*_x86-64.raw
+          retention-days: 1
+      - name: Upload vscode x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-x86-64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/vscode*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload vscode x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/vscode*_x86-64.manifest
 
   upload:
     needs: build
@@ -233,7 +285,13 @@ jobs:
                       mkosi.output/juno_*_x86-64.efi \
                       mkosi.output/juno_*_x86-64.usr-x86-64.*.raw \
                       mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw \
-                      mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw; do
+                      mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw \
+                      mkosi.output/vscode_*_arm64.raw \
+                      mkosi.output/vscode_*_arm64.manifest \
+                      mkosi.output/vscode_*_arm64.SHA256SUMS \
+                      mkosi.output/vscode_*_x86-64.raw \
+                      mkosi.output/vscode_*_x86-64.manifest \
+                      mkosi.output/vscode_*_x86-64.SHA256SUMS; do
             remote_url="$base_url/$(basename "$file")"
             if curl --silent --show-error --fail --head -u "$USER:$PASSWORD" "$remote_url" >/dev/null; then
               echo "Skipping existing file: $(basename "$file")"
