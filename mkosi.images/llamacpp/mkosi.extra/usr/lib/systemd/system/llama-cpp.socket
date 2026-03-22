@@ -1,9 +1,0 @@
-[Unit]
-Description=Socket for llama.cpp server
-
-[Socket]
-ListenStream=8000
-Service=llama-cpp-proxy.service
-
-[Install]
-WantedBy=sockets.target
