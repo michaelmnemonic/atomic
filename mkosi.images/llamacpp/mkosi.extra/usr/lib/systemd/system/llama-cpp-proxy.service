@@ -1,0 +1,8 @@
+[Unit]
+Description=Proxy for llama.cpp server socket activation
+BindsTo=llama-cpp.service
+Requires=llama-cpp.service
+After=llama-cpp.service
+
+[Service]
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd 127.0.0.1:8081 --exit-idle-time=90
