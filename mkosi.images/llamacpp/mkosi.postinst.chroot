@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+# Create symlink for llama-server's default theme path
+THEME_DIR="/usr/share/llama.cpp-tools/llama-server"
+if [[ -d "$THEME_DIR/themes/simplechat" ]]; then
+    ln -sf "themes/simplechat" "$THEME_DIR/active-theme"
+fi
