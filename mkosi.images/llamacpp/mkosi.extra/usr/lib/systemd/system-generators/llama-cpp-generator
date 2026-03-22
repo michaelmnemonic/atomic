@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+# systemd generator for llama-cpp instances
+# usage: llama-cpp-generator destination_directory [extra_directory1 extra_directory2]
+
+set -e
+
+DEST_DIR="$1"
+# Directories to search for instance configs (lowest priority first)
+SEARCH_DIRS=("/usr/lib/llama-cpp.d" "/run/llama-cpp.d" "/etc/llama-cpp.d")
+
+# Find all unique instance names
+INSTANCES=$(for dir in "${SEARCH_DIRS[@]}"; do
+    [ -d "$dir" ] && ls "$dir"/*.conf 2>/dev/null | xargs -n1 basename -s .conf
+done | sort -u)
+
+for instance in $INSTANCES; do
+    # Find the highest priority config file for this instance
+    CONFIG_FILE=""
+    for dir in "${SEARCH_DIRS[@]}"; do
+        [ -f "$dir/$instance.conf" ] && CONFIG_FILE="$dir/$instance.conf"
+    done
+
+    [ -z "$CONFIG_FILE" ] && continue
+
+    # Parse config variables (naive ini parsing)
+    parse_val() {
+        grep -E "^$1=" "$CONFIG_FILE" | head -n1 | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+    }
+
+    MODEL=$(parse_val "Model")
+    PORT=$(parse_val "Port")
+    INTERNAL_PORT=$(parse_val "InternalPort")
+    OPTIONS=$(parse_val "Options")
+    API_KEY_FILE=$(parse_val "ApiKeyFile")
+    IDLE_TIMEOUT=$(parse_val "IdleTimeout")
+
+    # Only generate if Model and Port are explicitly defined
+    [ -z "$MODEL" ] && continue
+    [ -z "$PORT" ] && continue
+
+    # Set optional defaults
+    INTERNAL_PORT=${INTERNAL_PORT:-"8081"}
+    OPTIONS=${OPTIONS:-"--jinja"}
+    IDLE_TIMEOUT=${IDLE_TIMEOUT:-"90"}
+
+    # Output Socket
+    cat <<EOF > "$DEST_DIR/llama-cpp-$instance.socket"
+[Unit]
+Description=Socket for llama.cpp instance $instance
+
+[Socket]
+ListenStream=$PORT
+Service=llama-cpp-proxy-$instance.service
+
+[Install]
+WantedBy=sockets.target
+EOF
+
+    # Output Proxy
+    cat <<EOF > "$DEST_DIR/llama-cpp-proxy-$instance.service"
+[Unit]
+Description=Proxy for llama.cpp socket activation - instance $instance
+BindsTo=llama-cpp-$instance.service
+Requires=llama-cpp-$instance.service
+After=llama-cpp-$instance.service
+
+[Service]
+ExecStart=/lib/systemd/systemd-socket-proxyd 127.0.0.1:$INTERNAL_PORT --exit-idle-time=$IDLE_TIMEOUT
+EOF
+
+    # Output Service
+    API_KEY_ARG=""
+    [ -n "$API_KEY_FILE" ] && API_KEY_ARG="--api-key-file $API_KEY_FILE"
+
+    cat <<EOF > "$DEST_DIR/llama-cpp-$instance.service"
+[Unit]
+Description=llama.cpp server - instance $instance
+
+[Service]
+ExecStart=/usr/bin/llama-server $OPTIONS -hf $MODEL --port $INTERNAL_PORT $API_KEY_ARG
+CacheDirectory=llama-cpp
+Environment=LLAMA_CACHE=/var/cache/llama-cpp
+DynamicUser=yes
+Restart=no
+EOF
+
+    # Create symlink in sockets.target.wants if needed
+    # Generators often use this to ensure their generated sockets are started
+    mkdir -p "$DEST_DIR/sockets.target.wants"
+    ln -sf "../llama-cpp-$instance.socket" "$DEST_DIR/sockets.target.wants/llama-cpp-$instance.socket"
+done
