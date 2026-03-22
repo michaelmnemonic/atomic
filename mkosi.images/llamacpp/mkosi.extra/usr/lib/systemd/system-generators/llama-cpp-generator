@@ -78,7 +78,7 @@ EOF
 Description=llama.cpp server - instance $instance
 
 [Service]
-ExecStart=/usr/bin/llama-server $OPTIONS --host 127.0.0.1 -hf $MODEL --port $INTERNAL_PORT $API_KEY_ARG
+ExecStart=/usr/bin/llama-server $OPTIONS -hf $MODEL --port $INTERNAL_PORT $API_KEY_ARG
 CacheDirectory=llama-cpp
 Environment=LLAMA_CACHE=/var/cache/llama-cpp
 DynamicUser=yes
