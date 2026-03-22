@@ -1,0 +1,9 @@
+[Unit]
+Description=llama.cpp server
+
+[Service]
+ExecStart=/usr/bin/llama-server --jinja -hf unsloth/gpt-oss-20b-GGUF:F16 --port 8081
+CacheDirectory=llama-cpp
+Environment=LLAMA_CACHE=/var/cache/llama-cpp
+DynamicUser=yes
+Restart=no
