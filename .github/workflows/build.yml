@@ -252,6 +252,58 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/vscode*_x86-64.manifest
+      - name: Upload llamacpp arm64 raw
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: llamacpp-arm64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/llamacpp_*_arm64.raw
+          retention-days: 1
+      - name: Upload llamacpp arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: llamacpp-arm64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/llamacpp*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload llamacpp arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: llamacpp-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/llamacpp*_arm64.manifest
+      - name: Upload llamacpp x86-64 raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: llamacpp-x86-64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/llamacpp_*_x86-64.raw
+          retention-days: 1
+      - name: Upload llamacpp x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: llamacpp-x86-64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/llamacpp*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload llamacpp x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: llamacpp-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/llamacpp*_x86-64.manifest
 
   upload:
     needs: build
@@ -291,7 +343,10 @@ jobs:
                       mkosi.output/vscode_*_arm64.SHA256SUMS \
                       mkosi.output/vscode_*_x86-64.raw \
                       mkosi.output/vscode_*_x86-64.manifest \
-                      mkosi.output/vscode_*_x86-64.SHA256SUMS; do
+                      mkosi.output/llamacpp_*_arm64.raw \
+                      mkosi.output/llamacpp_*_arm64.manifest \
+                      mkosi.output/llamacpp_*_x86-64.raw \
+                      mkosi.output/llamacpp_*_x86-64.manifest; do
             remote_url="$base_url/$(basename "$file")"
             if curl --silent --show-error --fail --head -u "$USER:$PASSWORD" "$remote_url" >/dev/null; then
               echo "Skipping existing file: $(basename "$file")"
