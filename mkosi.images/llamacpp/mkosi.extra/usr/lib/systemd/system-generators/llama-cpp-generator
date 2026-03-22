@@ -7,7 +7,7 @@ set -e
 
 DEST_DIR="$1"
 # Directories to search for instance configs (lowest priority first)
-SEARCH_DIRS=("/usr/lib/llama-cpp.d" "/run/llama-cpp.d" "/etc/llama-cpp.d")
+SEARCH_DIRS=("/usr/share/llama.cpp-tools/llama-server/models.d/" "/run/llama.cpp-tools/llama-server/models.d/" "/etc/llama.cpp-tools/llama-server/models.d/")
 
 # Find all unique instance names
 INSTANCES=$(for dir in "${SEARCH_DIRS[@]}"; do
