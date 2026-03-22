@@ -1,6 +1,8 @@
 .direnv
 
 # mkosi
+.mkosi-private
+.scripts/.roulette_state_dir
 mkosi.cache
 mkosi.crt
 mkosi.key
@@ -8,6 +10,4 @@ mkosi.lukskey
 mkosi.output
 mkosi.tools
 mkosi.tools.manifest
-.mkosi-private
-
-.scripts/.roulette_state_dir
+signing.key
