@@ -92,6 +92,58 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/base_*_x86-64.manifest
+      - name: Upload base+gnome arm64 tar
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-arm64-tar
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_arm64.tar.zst
+          retention-days: 1
+      - name: Upload base+gnome arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-arm64-tar-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload base+gnome arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_arm64.manifest
+      - name: Upload base+gnome x86-64 tar
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-x86-64-tar
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_x86-64.tar.zst
+          retention-days: 1
+      - name: Upload base+gnome x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-x86-64-tar-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload base+gnome x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_x86-64.manifest
       - name: Upload base+kde arm64 tar
         if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
