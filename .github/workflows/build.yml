@@ -66,6 +66,7 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/base_*_arm64.manifest
+          retention-days: 1
       - name: Upload base x86-64 tar
         if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
@@ -92,6 +93,115 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/base_*_x86-64.manifest
+          retention-days: 1
+      - name: Upload base+gnome arm64 tar
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-arm64-tar
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_arm64.tar.zst
+          retention-days: 1
+      - name: Upload base+gnome arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-arm64-tar-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload base+gnome arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_arm64.manifest
+          retention-days: 1
+      - name: Upload base+gnome x86-64 tar
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-x86-64-tar
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_x86-64.tar.zst
+          retention-days: 1
+      - name: Upload base+gnome x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-x86-64-tar-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload base+gnome x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+gnome-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+gnome_*_x86-64.manifest
+          retention-days: 1
+      - name: Upload base+kde arm64 tar
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+kde-arm64-tar
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+kde_*_arm64.tar.zst
+          retention-days: 1
+      - name: Upload base+kde arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+kde-arm64-tar-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+kde_*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload base+kde arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+kde-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+kde_*_arm64.manifest
+          retention-days: 1
+      - name: Upload base+kde x86-64 tar
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+kde-x86-64-tar
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+kde_*_x86-64.tar.zst
+          retention-days: 1
+      - name: Upload base+kde x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+kde-x86-64-tar-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+kde_*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload base+kde x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: base+kde-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/base+kde_*_x86-64.manifest
+          retention-days: 1
       - name: Upload charon arm64 raw
         if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
@@ -226,6 +336,7 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/vscode*_arm64.manifest
+          retention-days: 1
       - name: Upload vscode x86-64 raw
         if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
@@ -252,6 +363,7 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/vscode*_x86-64.manifest
+          retention-days: 1
       - name: Upload llamacpp arm64 raw
         if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
@@ -278,6 +390,7 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/llamacpp*_arm64.manifest
+          retention-days: 1
       - name: Upload llamacpp x86-64 raw
         if: matrix.host == 'ubuntu-24.04'
         uses: actions/upload-artifact@v7
@@ -304,6 +417,7 @@ jobs:
           archive: false     
           if-no-files-found: ignore
           path: mkosi.output/llamacpp*_x86-64.manifest
+          retention-days: 1
 
   upload:
     needs: build

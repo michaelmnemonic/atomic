@@ -59,7 +59,6 @@ fi
 echo "Hidden=true" >> /usr/share/applications/gscriptor.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-start.desktop
 echo "Hidden=true" >> /usr/share/applications/syncthing-ui.desktop
-echo "Hidden=true" >> /usr/share/applications/syncthing-web.desktop
 
 # Enable flakes
 echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
