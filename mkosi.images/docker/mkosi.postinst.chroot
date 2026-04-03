@@ -9,3 +9,7 @@ set -e
 if [[ -e /usr/sbin/iptables-legacy ]]; then
     ln -sf /usr/sbin/iptables-legacy /usr/sbin/iptables
 fi
+
+if [[ -e /usr/sbin/ip6tables-legacy ]]; then
+    ln -sf /usr/sbin/ip6tables-legacy /usr/sbin/ip6tables
+fi
