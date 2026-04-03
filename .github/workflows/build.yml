@@ -429,6 +429,114 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/llamacpp*_x86-64.manifest
           retention-days: 1
+      - name: Upload podman arm64 raw
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: podman-arm64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/podman_*_arm64.raw
+          retention-days: 1
+      - name: Upload podman arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: podman-arm64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/podman*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload podman arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: podman-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/podman*_arm64.manifest
+          retention-days: 1
+      - name: Upload podman x86-64 raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: podman-x86-64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/podman_*_x86-64.raw
+          retention-days: 1
+      - name: Upload podman x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: podman-x86-64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/podman*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload podman x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: podman-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/podman*_x86-64.manifest
+          retention-days: 1
+      - name: Upload docker arm64 raw
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-arm64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/docker_*_arm64.raw
+          retention-days: 1
+      - name: Upload docker arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-arm64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/docker*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload docker arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-arm64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/docker*_arm64.manifest
+          retention-days: 1
+      - name: Upload docker x86-64 raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-x86-64-raw
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/docker_*_x86-64.raw
+          retention-days: 1
+      - name: Upload docker x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-x86-64-checksum
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/docker*_x86-64.SHA256SUMS
+          retention-days: 1
+      - name: Upload docker x86-64 manifest
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-x86-64-manifest
+          archive: false     
+          if-no-files-found: ignore
+          path: mkosi.output/docker*_x86-64.manifest
+          retention-days: 1
 
   upload:
     needs: build
@@ -471,7 +579,19 @@ jobs:
                       mkosi.output/llamacpp_*_arm64.raw \
                       mkosi.output/llamacpp_*_arm64.manifest \
                       mkosi.output/llamacpp_*_x86-64.raw \
-                      mkosi.output/llamacpp_*_x86-64.manifest; do
+                      mkosi.output/llamacpp_*_x86-64.manifest \
+                      mkosi.output/podman_*_arm64.raw \
+                      mkosi.output/podman_*_arm64.manifest \
+                      mkosi.output/podman_*_arm64.SHA256SUMS \
+                      mkosi.output/podman_*_x86-64.raw \
+                      mkosi.output/podman_*_x86-64.manifest \
+                      mkosi.output/podman_*_x86-64.SHA256SUMS \
+                      mkosi.output/docker_*_arm64.raw \
+                      mkosi.output/docker_*_arm64.manifest \
+                      mkosi.output/docker_*_arm64.SHA256SUMS \
+                      mkosi.output/docker_*_x86-64.raw \
+                      mkosi.output/docker_*_x86-64.manifest \
+                      mkosi.output/docker_*_x86-64.SHA256SUMS; do
             remote_url="$base_url/$(basename "$file")"
             if curl --silent --show-error --fail --head -u "$USER:$PASSWORD" "$remote_url" >/dev/null; then
               echo "Skipping existing file: $(basename "$file")"
