@@ -1,0 +1,10 @@
+[Source]
+Type=url-file
+Path=https://files.maikkoehler.eu/Updates/
+MatchPattern=ghostty_@v_%w_%a.raw
+
+[Target]
+InstancesMax=2
+Type=regular-file
+Path=/var/lib/extensions
+MatchPattern=ghostty_@v_%w_%a.raw

@@ -46,6 +46,24 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 *   **mkosi.extra.bootable/:** Additional files to include in the image (e.g., `systemd` units, `repart.d` configs).
 *   **mkosi.sysupdate/:** Transfer definitions for `systemd-sysupdate` (A/B or partition-based updates).
 
+### Sysext Conventions
+When adding a new system extension (`mkosi.images/<name>/`), the following artifacts should also be created/updated:
+
+1. **`docs/sysupdate.d/<name>.transfer`** — Example `systemd-sysupdate` transfer file for installing/updating the sysext via URL. Uses this template:
+   ```ini
+   [Source]
+   Type=url-file
+   Path=https://files.maikkoehler.eu/Updates/
+   MatchPattern=<name>_@v_%w_%a.raw
+
+   [Target]
+   InstancesMax=2
+   Type=regular-file
+   Path=/var/lib/extensions
+   MatchPattern=<name>_@v_%w_%a.raw
+   ```
+2. **`README.md`** — Add the extension to both the "System Extensions" table and the "Available transfer files" table in the "Installing System Extensions" section.
+
 ### Working Features
 *   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
 *   **Statelessness:** `mkosi.finalize` captures `/etc` into `/usr/share/factory/etc`.
