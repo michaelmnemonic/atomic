@@ -1,0 +1,15 @@
+#!/bin/bash
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -e
+
+# Docker's default bridge networking relies on iptables for NAT/firewall rules.
+# Use iptables-legacy as the iptables frontend since iptables-nft is known to
+# cause issues with Docker's iptables manipulation.
+# TODO: Re-evaluate once Docker 29's nftables backend is part of debian sid.
+if [[ -e /usr/sbin/iptables-legacy ]]; then
+    ln -sf /usr/sbin/iptables-legacy /usr/sbin/iptables
+fi
+
+if [[ -e /usr/sbin/ip6tables-legacy ]]; then
+    ln -sf /usr/sbin/ip6tables-legacy /usr/sbin/ip6tables
+fi
