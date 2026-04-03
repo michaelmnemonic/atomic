@@ -2,6 +2,20 @@ name: Build output artifacts
 
 on:
   push:
+    paths:
+      - 'mkosi.conf'
+      - 'mkosi.version'
+      - 'mkosi.conf.d/**'
+      - 'mkosi.images/**'
+      - 'mkosi.extra.bootable/**'
+      - 'mkosi.repart/**'
+      - 'mkosi.sandbox/**'
+      - 'mkosi.sysupdate/**'
+      - 'mkosi.key.gpg'
+      - 'mkosi.crt.gpg'
+      - 'signing.key.gpg'
+      - 'microsoft.gpg'
+      - '.github/workflows/build.yml'
   workflow_dispatch:    # Allows manual triggering
 
 permissions:
