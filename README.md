@@ -30,6 +30,8 @@ Portable `systemd-sysext` images that can be layered on top of any bootable imag
 | **vscode** | Visual Studio Code |
 | **llamacpp** | llama.cpp LLM inference tools |
 | **ghostty** | Ghostty terminal emulator |
+| **podman** | Podman + distrobox + rootless container support |
+| **docker** | Docker Engine + distrobox |
 
 ## Key Properties
 
@@ -66,7 +68,9 @@ mkosi.images/
 │   └── mkosi.repart/       # Partition layout
 ├── vscode/                 # VSCode sysext
 ├── llamacpp/               # llama.cpp sysext
-└── ghostty/                # Ghostty sysext
+├── ghostty/                # Ghostty sysext
+├── podman/                 # Podman + distrobox sysext
+└── docker/                 # Docker Engine + distrobox sysext
 mkosi.extra.bootable/       # Files added to all bootable images
 │   └── usr/lib/
 │       ├── repart.d/       # systemd-repart partition definitions (3 A/B sets + root)
