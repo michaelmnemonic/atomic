@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+# Inform systemd-sysext that this extension requires a daemon-reload
+# after merging, so that newly shipped service units are discovered.
+echo "EXTENSION_RELOAD_MANAGER=1" >> "$BUILDROOT/usr/lib/extension-release.d/extension-release.docker"

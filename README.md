@@ -30,6 +30,33 @@ Portable `systemd-sysext` images that can be layered on top of any bootable imag
 | **vscode** | Visual Studio Code |
 | **llamacpp** | llama.cpp LLM inference tools |
 | **ghostty** | Ghostty terminal emulator |
+| **podman** | Podman + distrobox + rootless container support |
+| **docker** | Docker Engine + distrobox |
+
+## Installing System Extensions
+
+Example `systemd-sysupdate` transfer files for each sysext are provided in [`docs/sysupdate.d/`](docs/sysupdate.d/). To install or update an extension:
+
+```bash
+# 1. Copy the transfer file for the extension you want
+sudo cp docs/sysupdate.d/vscode.transfer /etc/sysupdate.d/
+
+# 2. Install (or update) the extension
+sudo systemd-sysupdate update
+
+# 3. Refresh sysext to merge the new extension
+sudo systemd-sysext refresh
+```
+
+Available transfer files:
+
+| File | Extension |
+|------|-----------|
+| `vscode.transfer` | Visual Studio Code |
+| `docker.transfer` | Docker Engine + distrobox |
+| `ghostty.transfer` | Ghostty terminal emulator |
+| `podman.transfer` | Podman + distrobox |
+| `llamacpp.transfer` | llama.cpp LLM inference tools |
 
 ## Key Properties
 
@@ -66,7 +93,9 @@ mkosi.images/
 │   └── mkosi.repart/       # Partition layout
 ├── vscode/                 # VSCode sysext
 ├── llamacpp/               # llama.cpp sysext
-└── ghostty/                # Ghostty sysext
+├── ghostty/                # Ghostty sysext
+├── podman/                 # Podman + distrobox sysext
+└── docker/                 # Docker Engine + distrobox sysext
 mkosi.extra.bootable/       # Files added to all bootable images
 │   └── usr/lib/
 │       ├── repart.d/       # systemd-repart partition definitions (3 A/B sets + root)
