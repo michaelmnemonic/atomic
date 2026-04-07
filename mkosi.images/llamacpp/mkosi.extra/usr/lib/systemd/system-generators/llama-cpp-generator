@@ -69,6 +69,32 @@ After=llama-cpp-$instance.service
 ExecStart=/lib/systemd/systemd-socket-proxyd 127.0.0.1:$INTERNAL_PORT --exit-idle-time=$IDLE_TIMEOUT
 EOF
 
+    # Output Download Service
+    cat <<EOF > "$DEST_DIR/llama-cpp-download-$instance.service"
+[Unit]
+Description=Pre-download model for llama.cpp instance $instance
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/llama-cli -hf $MODEL
+CacheDirectory=llama-cpp
+Environment=LLAMA_CACHE=/var/cache/llama-cpp
+DynamicUser=yes
+EOF
+
+    # Output Download Timer
+    cat <<EOF > "$DEST_DIR/llama-cpp-download-$instance.timer"
+[Unit]
+Description=Timer to pre-download model for llama.cpp instance $instance
+
+[Timer]
+OnBootSec=30
+RandomizedDelaySec=60
+Unit=llama-cpp-download-$instance.service
+EOF
+
     # Output Service
     API_KEY_ARG=""
     [ -n "$API_KEY_FILE" ] && API_KEY_ARG="--api-key-file $API_KEY_FILE"
@@ -76,6 +102,8 @@ EOF
     cat <<EOF > "$DEST_DIR/llama-cpp-$instance.service"
 [Unit]
 Description=llama.cpp server - instance $instance
+Requires=llama-cpp-download-$instance.service
+After=llama-cpp-download-$instance.service
 
 [Service]
 ExecStart=/usr/bin/llama-server $OPTIONS -hf $MODEL --port $INTERNAL_PORT $API_KEY_ARG
@@ -84,6 +112,10 @@ Environment=LLAMA_CACHE=/var/cache/llama-cpp
 DynamicUser=yes
 Restart=no
 EOF
+
+    # Create symlinks for generators
+    mkdir -p "$DEST_DIR/timers.target.wants"
+    ln -sf "../llama-cpp-download-$instance.timer" "$DEST_DIR/timers.target.wants/llama-cpp-download-$instance.timer"
 
     # Create symlink in sockets.target.wants if needed
     # Generators often use this to ensure their generated sockets are started
