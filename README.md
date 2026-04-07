@@ -32,6 +32,8 @@ Portable `systemd-sysext` images that can be layered on top of any bootable imag
 | **ghostty** | Ghostty terminal emulator |
 | **podman** | Podman + distrobox + rootless container support |
 | **docker** | Docker Engine + distrobox |
+| **fex-emu** | FEX-Emu x86 emulation on ARM64 |
+| **fex-emu-build** | FEX-Emu build environment (Debian build deps) |
 
 ## Installing System Extensions
 
@@ -57,6 +59,7 @@ Available transfer files:
 | `ghostty.transfer` | Ghostty terminal emulator |
 | `podman.transfer` | Podman + distrobox |
 | `llamacpp.transfer` | llama.cpp LLM inference tools |
+| `fex-emu.transfer` | FEX-Emu x86 emulation on ARM64 |
 
 ## Key Properties
 
@@ -95,7 +98,9 @@ mkosi.images/
 ├── llamacpp/               # llama.cpp sysext
 ├── ghostty/                # Ghostty sysext
 ├── podman/                 # Podman + distrobox sysext
-└── docker/                 # Docker Engine + distrobox sysext
+├── docker/                 # Docker Engine + distrobox sysext
+├── fex-emu/                # FEX-Emu x86 emulation sysext
+├── fex-emu-build/          # FEX-Emu build environment (build deps)
 mkosi.extra.bootable/       # Files added to all bootable images
 │   └── usr/lib/
 │       ├── repart.d/       # systemd-repart partition definitions (3 A/B sets + root)

@@ -1,0 +1,31 @@
+#!/bin/bash
+# SPDX-License-Identifier: LGPL-2.1-or-later
+set -euo pipefail
+
+# Pin to a specific tag or branch for reproducible builds.
+FEX_VERSION="main"
+FEX_REPO_URL="https://github.com/FEX-Emu/FEX.git"
+
+SRC_DIR="/tmp/fex-src"
+BUILD_DIR="/tmp/fex-build"
+
+git clone --depth 1 --recurse-submodules -b "${FEX_VERSION}" "${FEX_REPO_URL}" "${SRC_DIR}"
+
+mkdir -p "${BUILD_DIR}"
+cd "${BUILD_DIR}"
+
+CC=clang CXX=clang++ cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DUSE_LINKER=lld \
+    -DENABLE_LTO=True \
+    -DBUILD_TESTING=False \
+    -DENABLE_ASSERTIONS=False \
+    -G Ninja \
+    "${SRC_DIR}"
+
+ninja
+
+# DESTDIR must be absolute — FEX's thunk subprojects break with relative paths.
+# mkosi sets DESTDIR to an absolute staging directory automatically.
+DESTDIR="$(realpath "${DESTDIR}")" ninja install
