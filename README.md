@@ -66,14 +66,14 @@ To set up a llama.cpp instance, copy the example to `/etc` and adjust the model 
 
 ```bash
 # 1. Create the config directory
-sudo mkdir -p /etc/llama.cpp-tools/llama-server/models.d/
+run0 mkdir -p /etc/llama.cpp-tools/llama-server/models.d/
 
 # 2. Copy and edit the example config
-sudo cp docs/llama.cpp-tools/default.conf.example \
+run0 cp docs/llama.cpp-tools/default.conf.example \
      /etc/llama.cpp-tools/llama-server/models.d/my-model.conf
 
 # 3. Edit the file — set Model, Port, and Options for your device
-sudo nano /etc/llama.cpp-tools/llama-server/models.d/my-model.conf
+run0 nano /etc/llama.cpp-tools/llama-server/models.d/my-model.conf
 ```
 
 The `llama-cpp-generator` systemd generator discovers `.conf` files in these directories (ascending priority):
