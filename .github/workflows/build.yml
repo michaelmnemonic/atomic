@@ -537,6 +537,33 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/docker*_x86-64.manifest
           retention-days: 1
+      - name: Upload qsc arm64 raw
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: qsc-arm64-raw
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/qsc_*_arm64.raw
+          retention-days: 1
+      - name: Upload qsc arm64 checksum
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: qsc-arm64-checksum
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/qsc*_arm64.SHA256SUMS
+          retention-days: 1
+      - name: Upload qsc arm64 manifest
+        if: matrix.host == 'ubuntu-24.04-arm'
+        uses: actions/upload-artifact@v7
+        with:
+          name: qsc-arm64-manifest
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/qsc*_arm64.manifest
+          retention-days: 1
 
   upload:
     needs: build
@@ -591,7 +618,10 @@ jobs:
                       mkosi.output/docker_*_arm64.SHA256SUMS \
                       mkosi.output/docker_*_x86-64.raw \
                       mkosi.output/docker_*_x86-64.manifest \
-                      mkosi.output/docker_*_x86-64.SHA256SUMS; do
+                      mkosi.output/docker_*_x86-64.SHA256SUMS \
+                      mkosi.output/qsc_*_arm64.raw \
+                      mkosi.output/qsc_*_arm64.manifest \
+                      mkosi.output/qsc_*_arm64.SHA256SUMS; do
             remote_url="$base_url/$(basename "$file")"
             if curl --silent --show-error --fail --head -u "$USER:$PASSWORD" "$remote_url" >/dev/null; then
               echo "Skipping existing file: $(basename "$file")"

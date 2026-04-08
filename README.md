@@ -32,6 +32,7 @@ Portable `systemd-sysext` images that can be layered on top of any bootable imag
 | **ghostty** | Ghostty terminal emulator |
 | **podman** | Podman + distrobox + rootless container support |
 | **docker** | Docker Engine + distrobox |
+| **qsc** | Qualcomm Software Center (arm64 only) |
 
 ## Installing System Extensions
 
@@ -57,6 +58,7 @@ Available transfer files:
 | `ghostty.transfer` | Ghostty terminal emulator |
 | `podman.transfer` | Podman + distrobox |
 | `llamacpp.transfer` | llama.cpp LLM inference tools |
+| `qsc.transfer` | Qualcomm Software Center (arm64 only) |
 
 ## Key Properties
 
@@ -95,7 +97,8 @@ mkosi.images/
 ├── llamacpp/               # llama.cpp sysext
 ├── ghostty/                # Ghostty sysext
 ├── podman/                 # Podman + distrobox sysext
-└── docker/                 # Docker Engine + distrobox sysext
+├── docker/                 # Docker Engine + distrobox sysext
+└── qsc/                    # Qualcomm Software Center sysext (arm64 only)
 mkosi.extra.bootable/       # Files added to all bootable images
 │   └── usr/lib/
 │       ├── repart.d/       # systemd-repart partition definitions (3 A/B sets + root)
