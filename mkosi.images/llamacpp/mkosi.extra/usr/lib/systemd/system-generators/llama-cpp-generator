@@ -82,6 +82,8 @@ ExecStart=/usr/bin/llama-server $OPTIONS -hf $MODEL --port $INTERNAL_PORT $API_K
 CacheDirectory=llama-cpp
 Environment=LLAMA_CACHE=/var/cache/llama-cpp
 DynamicUser=yes
+SupplementaryGroups=render
+SupplementaryGroups=video
 Restart=no
 EOF
 
