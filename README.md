@@ -58,6 +58,31 @@ Available transfer files:
 | `podman.transfer` | Podman + distrobox |
 | `llamacpp.transfer` | llama.cpp LLM inference tools |
 
+### Configuring llama.cpp Instances
+
+The llamacpp sysext ships no default model configuration — model choice is too device-specific to ship one. Instead, an example configuration is provided in [`docs/llama.cpp-tools/default.conf.example`](docs/llama.cpp-tools/default.conf.example).
+
+To set up a llama.cpp instance, copy the example to `/etc` and adjust the model and settings for your hardware:
+
+```bash
+# 1. Create the config directory
+sudo mkdir -p /etc/llama.cpp-tools/llama-server/models.d/
+
+# 2. Copy and edit the example config
+sudo cp docs/llama.cpp-tools/default.conf.example \
+     /etc/llama.cpp-tools/llama-server/models.d/my-model.conf
+
+# 3. Edit the file — set Model, Port, and Options for your device
+sudo nano /etc/llama.cpp-tools/llama-server/models.d/my-model.conf
+```
+
+The `llama-cpp-generator` systemd generator discovers `.conf` files in these directories (ascending priority):
+- `/usr/share/llama.cpp-tools/llama-server/models.d/` — shipped with the sysext
+- `/run/llama.cpp-tools/llama-server/models.d/` — runtime
+- `/etc/llama.cpp-tools/llama-server/models.d/` — local admin config
+
+Each `.conf` file defines one instance. Required fields are `Model` (HuggingFace identifier) and `Port`. See the example file for all available options.
+
 ## Key Properties
 
 - **Immutable `/usr`** — EROFS filesystem with dm-verity integrity verification
