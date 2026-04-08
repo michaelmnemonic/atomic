@@ -60,7 +60,7 @@ Available transfer files:
 
 ### Configuring llama.cpp Instances
 
-The llamacpp sysext ships no default model configuration — model choice is too device-specific to ship one. Instead, an example configuration is provided in [`docs/llama.cpp-tools/default.conf.example`](docs/llama.cpp-tools/default.conf.example).
+The llamacpp sysext ships no default model configuration. But, an example configuration is provided in [`docs/llama.cpp-tools/default.conf.example`](docs/llama.cpp-tools/default.conf.example).
 
 To set up a llama.cpp instance, copy the example to `/etc` and adjust the model and settings for your hardware:
 
