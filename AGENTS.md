@@ -49,7 +49,11 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 ### Sysext Conventions
 When adding a new system extension (`mkosi.images/<name>/`), the following artifacts should also be created/updated:
 
-1. **`docs/sysupdate.d/<name>.transfer`** — Example `systemd-sysupdate` transfer file for installing/updating the sysext via URL. Uses this template:
+1. **`.github/workflows/build.yml`** — The CI workflow must be updated to build, upload, and publish the new image/sysext. Specifically:
+   - Add `upload-artifact` steps for raw, checksum, and manifest (for the applicable architectures).
+   - Add the output file patterns to the upload job's `for` loop so they get published to the remote server.
+
+2. **`docs/sysupdate.d/<name>.transfer`** — Example `systemd-sysupdate` transfer file for installing/updating the sysext via URL. Uses this template:
    ```ini
    [Source]
    Type=url-file
@@ -62,7 +66,7 @@ When adding a new system extension (`mkosi.images/<name>/`), the following artif
    Path=/var/lib/extensions
    MatchPattern=<name>_@v_%w_%a.raw
    ```
-2. **`README.md`** — Add the extension to both the "System Extensions" table and the "Available transfer files" table in the "Installing System Extensions" section.
+3. **`README.md`** — Add the extension to both the "System Extensions" table and the "Available transfer files" table in the "Installing System Extensions" section.
 
 ### Working Features
 *   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
