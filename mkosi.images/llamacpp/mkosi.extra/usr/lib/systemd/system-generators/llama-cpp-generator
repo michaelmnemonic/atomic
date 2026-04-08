@@ -83,6 +83,7 @@ CacheDirectory=llama-cpp
 Environment=LLAMA_CACHE=/var/cache/llama-cpp
 DynamicUser=yes
 SupplementaryGroups=render
+SupplementaryGroups=video
 Restart=no
 EOF
 
