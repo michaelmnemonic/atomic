@@ -68,6 +68,11 @@ When adding a new system extension (`mkosi.images/<name>/`), the following artif
    ```
 3. **`README.md`** — Add the extension to both the "System Extensions" table and the "Available transfer files" table in the "Installing System Extensions" section.
 
+### Sysext Tips
+
+*   **Local `.deb` packages:** Place `.deb` files in `mkosi.images/<name>/mkosi.packages/`. mkosi automatically installs any debs found there — no `Packages=` or `PackageDirectory=` config needed.
+*   **Architecture-constrained sysexts:** When a sysext only targets one architecture (e.g. arm64-only), add a `[Match]` section with `Architecture=` to its `mkosi.conf`. The CI workflow should only include upload steps for that architecture (no x86-64 steps needed).
+
 ### Working Features
 *   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
 *   **Statelessness:** `mkosi.finalize` captures `/etc` into `/usr/share/factory/etc`.
