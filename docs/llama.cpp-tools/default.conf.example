@@ -1,0 +1,28 @@
+[gpt-oss]
+# Example llama-cpp instance configuration
+#
+# Copy this file to /etc/llama.cpp-tools/llama-server/models.d/<name>.conf
+# and adjust the values for your device and use case.
+#
+# The generator (llama-cpp-generator) picks up .conf files from three
+# directories in ascending priority order:
+#   /usr/share/llama.cpp-tools/llama-server/models.d/  (sysext-shipped)
+#   /run/llama.cpp-tools/llama-server/models.d/        (runtime)
+#   /etc/llama.cpp-tools/llama-server/models.d/        (local admin)
+#
+# Required fields:
+#   Model  — HuggingFace model identifier (used with -hf)
+#   Port   — External port for socket-activated access
+#
+# Optional fields:
+#   InternalPort  — Internal port the llama-server listens on (default: 8081)
+#   Options       — Extra CLI flags passed to llama-server (default: --jinja)
+#   IdleTimeout   — Proxy idle timeout in seconds (default: 90)
+#   ApiKeyFile    — Path to an API key file for authentication
+
+Model=unsloth/gpt-oss-20b-GGUF:F16
+Port=8000
+InternalPort=8001
+Options=--jinja
+IdleTimeout=90
+# ApiKeyFile=/etc/llama.cpp-tools/llama-server/api.key
