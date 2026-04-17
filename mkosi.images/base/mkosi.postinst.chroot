@@ -16,9 +16,12 @@ fi
 find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_shells.so/d' {} \;
 find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_securetty.so/d' {} \;
 
-# Fix unix_chkpwd to be setgid shadow so it can read /etc/shadow
-# for non-root PAM authentication (e.g., KDE screen locker)
-chown root:shadow /usr/sbin/unix_chkpwd
+# Fix unix_chkpwd to be setgid shadow (GID 42) so it can read /etc/shadow
+# for non-root PAM authentication (e.g., KDE screen locker).
+# The shadow group is created at runtime by systemd-sysusers, so use numeric GID.
+if [[ -f /usr/sbin/unix_chkpwd ]]; then
+    chown 0:42 /usr/sbin/unix_chkpwd
+fi
 
 # Fedora disables the userdb ssh dropin by default, but helpfully leaves it available in
 # the package so that we can just symlink it to a name that will be picked up by systemd-tmpfiles.
