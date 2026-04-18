@@ -42,6 +42,7 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 *   **mkosi.images/base/:** Base image configuration with profiles for GNOME and KDE.
 *   **mkosi.images/charon/:** ARM64-specific configuration for Lenovo ThinkPad X13s with dm-verity and EROFS.
 *   **mkosi.images/juno/:** x86-64-specific configuration with dm-verity and EROFS.
+*   **mkosi.images/pluto/:** x86-64 desktop PC configuration (AMD GPU) with dm-verity and EROFS.
 *   **mkosi.images/vscode/:** Configuration for a VSCode-specific image.
 *   **mkosi.extra.bootable/:** Additional files to include in the image (e.g., `systemd` units, `repart.d` configs).
 *   **mkosi.sysupdate/:** Transfer definitions for `systemd-sysupdate` (A/B or partition-based updates).
@@ -68,7 +69,7 @@ When adding a new system extension (`mkosi.images/<name>/`), the following artif
 *   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
 *   **Statelessness:** `mkosi.finalize` captures `/etc` into `/usr/share/factory/etc`.
 *   **ARM64 Support:** Targeted support for Lenovo ThinkPad X13s via `mkosi.images/charon/`.
-*   **x86-64 Support:** Configuration for x86-64 systems via `mkosi.images/juno/`.
+*   **x86-64 Support:** Configuration for x86-64 systems via `mkosi.images/juno/` (StarLabs MK V) and `mkosi.images/pluto/` (Desktop PC, AMD GPU).
 *   **Branding:** Identity set to "atomic" (derived from ParticleOS) via `mkosi.postinst.chroot`.
 *   **Unified Kernel Images (UKI):** Support for UKI generation with initrd and base trees.
 *   **Partition Updates:** `systemd-sysupdate` configurations for updating partitions (usr, usr-verity, usr-verity-sig).

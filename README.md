@@ -15,6 +15,7 @@ Everything is built on **Debian sid** and targets modern systemd primitives: Uni
 | Image | Architecture | Description |
 |-------|-------------|-------------|
 | **juno** | x86-64 | StarLabs MK V |
+| **pluto** | x86-64 | Desktop PC (AMD GPU) |
 | **charon** | arm64 | Lenovo ThinkPad X13s |
 | **base** | x86-64 / arm64 | Shared base OS |
 | **base+gnome** | x86-64 / arm64 | Base image with GNOME desktop |
@@ -112,7 +113,9 @@ mkosi.images/
 ├── base+gnome/             # GNOME desktop overlay
 ├── base+kde/               # KDE Plasma desktop overlay
 ├── initrd/                 # Custom initrd for UKI
-├── juno/                   # x86-64 disk image definition
+├── juno/                   # x86-64 disk image definition (StarLabs MK V)
+│   └── mkosi.repart/       # Partition layout (ESP, usr, usr-verity, usr-verity-sig)
+├── pluto/                  # x86-64 disk image definition (Desktop PC, AMD GPU)
 │   └── mkosi.repart/       # Partition layout (ESP, usr, usr-verity, usr-verity-sig)
 ├── charon/                 # arm64 disk image (Lenovo ThinkPad X13s)
 │   └── mkosi.repart/       # Partition layout

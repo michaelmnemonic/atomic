@@ -310,6 +310,60 @@ jobs:
           if-no-files-found: ignore
           path: mkosi.output/juno_*_x86-64.SHA256SUMS
           retention-days: 1
+      - name: Upload pluto x86-64 raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pluto-x86-64-raw
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/pluto_*_x86-64.raw
+          retention-days: 1
+      - name: Upload pluto x86-64 efi
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pluto-x86-64-efi
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/pluto_*_x86-64.efi
+          retention-days: 1
+      - name: Upload pluto x86-64 usr raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pluto-x86-64-usr-raw
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/pluto_*_x86-64.usr-x86-64.*.raw
+          retention-days: 1
+      - name: Upload pluto x86-64 usr verity raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pluto-x86-64-usr-verity-raw
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/pluto_*_x86-64.usr-x86-64-verity.*.raw
+          retention-days: 1
+      - name: Upload pluto x86-64 usr verity sig raw
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pluto-x86-64-usr-verity-sig-raw
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/pluto_*_x86-64.usr-x86-64-verity-sig.*.raw
+          retention-days: 1
+      - name: Upload pluto x86-64 checksum
+        if: matrix.host == 'ubuntu-24.04'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pluto-x86-64-usr-verity-sig-raw-checksum
+          archive: false
+          if-no-files-found: ignore
+          path: mkosi.output/pluto_*_x86-64.SHA256SUMS
+          retention-days: 1
       - name: Upload vscode arm64 raw
         if: matrix.host == 'ubuntu-24.04-arm'
         uses: actions/upload-artifact@v7
@@ -560,6 +614,10 @@ jobs:
                       mkosi.output/juno_*_x86-64.usr-x86-64.*.raw \
                       mkosi.output/juno_*_x86-64.usr-x86-64-verity.*.raw \
                       mkosi.output/juno_*_x86-64.usr-x86-64-verity-sig.*.raw \
+                      mkosi.output/pluto_*_x86-64.efi \
+                      mkosi.output/pluto_*_x86-64.usr-x86-64.*.raw \
+                      mkosi.output/pluto_*_x86-64.usr-x86-64-verity.*.raw \
+                      mkosi.output/pluto_*_x86-64.usr-x86-64-verity-sig.*.raw \
                       mkosi.output/vscode_*_arm64.raw \
                       mkosi.output/vscode_*_arm64.manifest \
                       mkosi.output/vscode_*_arm64.SHA256SUMS \
