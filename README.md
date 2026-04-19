@@ -8,7 +8,7 @@ Atomic is a collection of declarative OS image definitions that produce verified
 
 The system is stateless — `/etc` is populated from `/usr/share/factory/etc` on first boot, and the writable root exists only for runtime state. Additional software is layered on top via `systemd-sysext` extensions rather than package installs into the base image.
 
-Everything is built on **Debian sid** and targets modern systemd primitives: Unified Kernel Images (UKI), `systemd-repart`, `systemd-boot`, and `systemd-sysupdate`.
+Everything is built on **Debian Trixie** and targets modern systemd primitives: Unified Kernel Images (UKI), `systemd-repart`, `systemd-boot`, and `systemd-sysupdate`.
 
 ## Images
 
@@ -106,7 +106,7 @@ run0 systemd-cryptenroll --unlock-key-file /usr/share/key-file --wipe-slot 0 --p
 ## Repository Layout
 
 ```
-mkosi.conf                  # Root configuration (Debian sid, distribution settings)
+mkosi.conf                  # Root configuration (Debian Trixie, distribution settings)
 mkosi.version               # Version derived from git tags
 mkosi.images/
 ├── base/                   # Shared base image
