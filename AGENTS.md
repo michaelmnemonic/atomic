@@ -36,7 +36,7 @@ The user is an experienced Linux user but new to `mkosi` and this specific way o
 ## Repository Context
 
 ### Project Structure
-*   **Root:** Contains global `mkosi.conf` (Debian sid distribution settings) and the main `atomic` image configuration.
+*   **Root:** Contains global `mkosi.conf` (Debian trixie distribution settings) and the main `atomic` image configuration.
 *   **mkosi.conf.d/:** Contains device-specific overrides (e.g., `lenovo-x13s` for ARM64).
 *   **mkosi.images/initrd/:** Configuration for the Unified Kernel Image (UKI) initrd.
 *   **mkosi.images/base/:** Base image configuration with profiles for GNOME and KDE.
