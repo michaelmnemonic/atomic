@@ -16,3 +16,8 @@ find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_securetty.so/d' {} \
 if [[ -f /usr/lib/tmpfiles.d/debian.conf ]]; then
     sed -i '/\/etc\/pam.d/d' /usr/lib/tmpfiles.d/debian.conf
 fi
+
+# Autologin
+echo "[initial_session]" >> /etc/greetd/config.toml
+echo 'command = "uwsm start hyprland"' >> /etc/greetd/config.toml
+echo 'user = "maik"' >> /etc/greetd/config.toml
