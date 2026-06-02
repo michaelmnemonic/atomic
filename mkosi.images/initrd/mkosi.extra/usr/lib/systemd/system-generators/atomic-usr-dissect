@@ -1,0 +1,126 @@
+#!/bin/bash
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# atomic-usr-dissect — systemd generator for /usr discovery via dm-verity
+#
+# TODO: Remove this generator (and atomic-veritysetup-helper) once Debian stable
+# ships systemd that support mount.usr=dissect.
+# At that point, restore the kernel cmdline parameters in each device mkosi.conf:
+#   mount.usr=dissect
+#   systemd.image_policy=esp=unprotected:xbootldr=unprotected+unused+absent:usr=signed:root=encrypted+absent:swap=encrypted+unused+absent:home=unprotected+absent:=ignore
+#   systemd.image_filter=usr=<device>*:usr-verity=<device>*:usr-verity-sig=<device>*:root=root:swap=<device>-*
+#
+# Replaces mount.usr=dissect for older systemd versions.
+#
+# How it works:
+#   1. Reads IMAGE_ID + IMAGE_VERSION from /run/os-release (embedded in UKI by systemd-stub)
+#   2. Computes partition labels matching the repart Label= patterns (e.g., "juno_0.0.2")
+#   3. Generates a veritysetup service + mount unit referencing /dev/disk/by-label/ paths
+#   4. At boot time, the helper script extracts the root hash and runs veritysetup
+#
+# Why this exists:
+#   Debian trixie ships systemd 257, which lacks the dissect integration in
+#   gpt-auto-generator. This generator provides equivalent functionality using only tools available in bookworm's initrd.
+#
+# Security model:
+#   The UKI is verified by Secure Boot → os-release identity is trusted →
+#   correct /usr partition is selected → dm-verity ensures content integrity.
+#   Signature verification of the verity hash (usr-verity-sig) is not performed,
+#   unlike with mount.usr=dissect which uses systemd.image_policy=usr=signed.
+
+set -euo pipefail
+
+NORMAL_DIR="${1:-}"
+
+if [[ -z "$NORMAL_DIR" ]]; then
+    echo "atomic-usr-dissect: No output directory, skipping" >&2
+    exit 0
+fi
+
+# --- Read identity from UKI's embedded os-release ---
+# systemd-stub exposes the os-release from the base image at /run/os-release
+if [[ ! -f /run/os-release ]]; then
+    echo "atomic-usr-dissect: No /run/os-release, skipping" >&2
+    exit 0
+fi
+
+# shellcheck source=/dev/null
+. /run/os-release
+
+IMAGE_ID="${IMAGE_ID:-}"
+IMAGE_VERSION="${IMAGE_VERSION:-0.0.1}"
+
+if [[ -z "$IMAGE_ID" ]]; then
+    echo "atomic-usr-dissect: No IMAGE_ID in os-release, skipping" >&2
+    exit 0
+fi
+
+# --- Compute partition labels ---
+# These must match the Label= patterns in mkosi.repart/*.conf:
+#   usr partition:      Label=%M_%v           → <IMAGE_ID>_<IMAGE_VERSION>
+#   usr-verity:         Label=%M_%v_verity    → <IMAGE_ID>_<IMAGE_VERSION>_verity
+USR_LABEL="${IMAGE_ID}_${IMAGE_VERSION}"
+VERITY_LABEL="${USR_LABEL}_verity"
+
+echo "atomic-usr-dissect: IMAGE_ID=$IMAGE_ID IMAGE_VERSION=$IMAGE_VERSION" >&2
+echo "atomic-usr-dissect: usr label=$USR_LABEL verity label=$VERITY_LABEL" >&2
+
+# --- Device paths ---
+# Standard udev creates /dev/disk/by-label/<label> symlinks for all labeled
+# partitions. This does NOT require the dissect udev builtin (90-image-dissect.rules).
+USR_DEV="/dev/disk/by-label/${USR_LABEL}"
+VERITY_DEV="/dev/disk/by-label/${VERITY_LABEL}"
+
+mkdir -p "$NORMAL_DIR"
+
+# --- Generate verity setup service ---
+# This service runs the helper script which:
+#   1. Waits for the partition devices to appear
+#   2. Extracts the root hash from the verity superblock
+#   3. Opens the dm-verity device as /dev/mapper/usr
+cat > "$NORMAL_DIR/atomic-veritysetup-usr.service" <<EOF
+[Unit]
+Description=Set up dm-verity for /usr (${USR_LABEL})
+DefaultDependencies=no
+After=systemd-udevd.service
+After=local-fs-pre.target
+Before=sysroot-usr.mount
+Before=initrd-root-fs.target
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/lib/systemd/system-generators/atomic-veritysetup-helper "${USR_DEV}" "${VERITY_DEV}"
+ExecStop=/sbin/veritysetup close usr
+EOF
+
+# --- Generate mount unit for /sysroot/usr ---
+# The mount depends on the verity service having completed successfully.
+# The mapped device /dev/mapper/usr is created by the verity service.
+cat > "$NORMAL_DIR/sysroot-usr.mount" <<EOF
+[Unit]
+Description=Mount /usr (${USR_LABEL}) via dm-verity
+DefaultDependencies=no
+Requires=atomic-veritysetup-usr.service
+After=atomic-veritysetup-usr.service
+Before=initrd-root-fs.target
+Before=initrd-fs.target
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Mount]
+What=/dev/mapper/usr
+Where=/sysroot/usr
+Type=erofs
+Options=ro
+EOF
+
+# --- Activate the units ---
+# Hook both the mount and verity service into initrd-root-fs.target
+# so they are started during initrd phase.
+mkdir -p "$NORMAL_DIR/initrd-root-fs.target.requires"
+ln -s "../sysroot-usr.mount" "$NORMAL_DIR/initrd-root-fs.target.requires/sysroot-usr.mount"
+ln -s "../atomic-veritysetup-usr.service" "$NORMAL_DIR/initrd-root-fs.target.requires/atomic-veritysetup-usr.service"
+
+echo "atomic-usr-dissect: Generated units for ${USR_LABEL}" >&2

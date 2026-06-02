@@ -65,6 +65,9 @@ When adding a new system extension (`mkosi.images/<name>/`), the following artif
    ```
 2. **`README.md`** — Add the extension to both the "System Extensions" table and the "Available transfer files" table in the "Installing System Extensions" section.
 
+### Experimental Features
+*   **Custom `/usr` Discovery Generator:** `atomic-usr-dissect` generator in the initrd replaces `mount.usr=dissect` (systemd 256+), enabling Debian bookworm (systemd 252) compatibility. Reads `IMAGE_ID`/`IMAGE_VERSION` from UKI's embedded os-release, discovers partitions by label, sets up dm-verity, and mounts `/sysroot/usr`. **Trade-off:** No PKCS#7 signature verification (unlike `mount.usr=dissect` with `usr=signed` policy); relies on Secure Boot → os-release identity → verity hash chain instead.
+
 ### Working Features
 *   **Split /usr:** Root `mkosi.conf` and `mkosi.repart/` correctly configure a split `/usr` using EROFS and dm-verity.
 *   **Statelessness:** `mkosi.finalize` captures `/etc` into `/usr/share/factory/etc`.
