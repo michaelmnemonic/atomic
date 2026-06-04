@@ -11,6 +11,10 @@ fi
 find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_shells.so/d' {} \;
 find /usr/lib/pam.d/ -mindepth 1 -exec sed --in-place '/pam_securetty.so/d' {} \;
 
+# Linux kernel expects firmware under different file path
+if [[ -f /usr/lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin ]]; then
+    ln /usr/lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin /usr/lib/firmware/ath11k/WCN6855/hw2.1/firmware-2.bin
+fi
 
 # Give this image its own identity/branding via os-release +
 # issue. Note that we keep the original $ID, $VERSION and $VERSION_ID
