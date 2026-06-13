@@ -21,7 +21,7 @@ jobs:
           sudo apt -y update
 
       - name: Install mkosi
-        uses: systemd/mkosi@v26
+        uses: systemd/mkosi@main
 
       - name: Checkout repository
         uses: actions/checkout@v6

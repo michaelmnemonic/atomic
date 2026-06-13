@@ -3,10 +3,6 @@ name: Bump debian snapshot
 on:
   workflow_dispatch:    # Allows manual triggering
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   bump:
     runs-on: ubuntu-24.04
@@ -22,7 +18,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_FOR_PR_CREATION }}
         with:
           commit-message: Bump debian snapshot
           branch: bump-debian-snapshot
