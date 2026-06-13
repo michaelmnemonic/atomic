@@ -1,3 +1,5 @@
 # Disabled by default in the package
 disable speech-dispatcherd.service
 
+# enable graphical boot
+enable gdm.service
